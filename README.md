@@ -1,92 +1,162 @@
-# 🔎 InsightForge
+# 🔍 InsightForge
 
 ### AI Data Detective — Discover what your data is trying to tell you.
 
-InsightForge is an AI-powered data investigation tool that automatically analyzes CSV and Excel datasets to discover trends, anomalies, data-quality issues, and interesting patterns.
+InsightForge is an AI-powered data analysis tool that automatically explores datasets, detects trends and anomalies, checks data quality, and uses **Gemma 4** to help users investigate interesting findings.
 
-Instead of simply asking an AI questions about your data, InsightForge first **detects something interesting** and then lets you investigate it.
-
----
-
-## 🚀 What InsightForge Does
-
-Upload a CSV or Excel file and InsightForge automatically:
-
-- 📊 Profiles the dataset
-- 🔍 Analyzes columns and data types
-- ⚠️ Detects missing values
-- 🔁 Detects duplicate rows
-- 📈 Generates statistical summaries
-- 📉 Detects basic trends
-- 🚨 Detects statistical anomalies
-- 📊 Generates interactive visualizations
-- 🕵️ Investigates individual anomalies
-- 🤖 Uses Gemma to explain findings
-- 💡 Generates an AI-powered data investigation report
-- ⬇️ Allows report and dataset export
+Instead of requiring users to know exactly what question to ask, InsightForge first looks at the data and identifies potentially meaningful patterns.
 
 ---
 
-## 🕵️ The Key Idea
+## 🚀 Why InsightForge?
 
-Most AI data-analysis tools follow this pattern:
+Most data-analysis tools follow this workflow:
 
-> **Ask a question → AI answers**
+> Ask a question → Analyze the data → Get an answer
 
-InsightForge follows a different approach:
+InsightForge takes a different approach:
 
-> **Detect something interesting → Investigate it → Understand why it matters**
+> Upload data → Discover something interesting → Investigate it with AI
 
-This makes the system useful even when the user does not know what questions to ask.
+The goal is to help users discover insights they may not have thought to look for.
+
+---
+
+## ✨ Key Features
+
+### 📊 Dataset Overview
+- Upload CSV or Excel files
+- View dataset dimensions
+- Preview uploaded data
+- Automatically identify numeric and categorical columns
+
+### 🧹 Data Quality Analysis
+- Detect missing values
+- Detect duplicate rows
+- Show column data types
+- Display basic statistical information
+
+### 📈 Automatic Trend Detection
+InsightForge automatically searches for:
+- Date/time columns
+- Numeric columns
+- Changes between the beginning and end of a dataset
+
+It then generates an interactive Plotly chart showing the detected trend.
+
+### 🚨 Smart Anomaly Detection
+
+InsightForge combines statistical techniques to identify potentially unusual values:
+
+- IQR-based anomaly detection
+- Z-score analysis
+- Numeric-column analysis
+- Highlighting potentially unusual observations
+
+This helps users find values that deserve further investigation.
+
+### 🕵️ Investigate This
+
+This is the core feature of InsightForge.
+
+When an interesting anomaly is detected, users can investigate it using Gemma.
+
+Python first calculates and verifies the relevant evidence.
+
+Gemma then interprets that evidence and explains:
+
+- What happened
+- Why it may be interesting
+- What patterns are visible
+- What users should investigate next
+
+This separation helps reduce unsupported AI-generated conclusions.
+
+### 💡 Highest Value Investigation
+
+Users can select a numeric column and investigate the row containing its highest value.
+
+InsightForge provides the relevant dataset evidence to Gemma for interpretation.
+
+### 🤖 AI Data Detective
+
+Gemma is used as an analytical assistant rather than as the primary calculator.
+
+The application follows this principle:
+
+> **Python calculates the facts. Gemma explains the facts.**
+
+### 📄 AI Insight Report
+
+InsightForge can generate a structured AI report containing:
+
+- Dataset overview
+- Data quality observations
+- Trends
+- Potential anomalies
+- Important findings
+- Suggested areas for investigation
+
+The report can be downloaded as a Markdown file.
+
+### 💾 Data Export
+
+Users can download:
+
+- The generated AI report
+- The uploaded dataset
 
 ---
 
 ## 🧠 How It Works
 
 ```text
-             CSV / Excel
-                  │
-                  ▼
-          ┌─────────────────┐
-          │  Data Profiling │
-          └────────┬────────┘
-                   │
-                   ▼
-        ┌─────────────────────┐
-        │ Detection Engine    │
-        │                     │
-        │ • Data Quality      │
-        │ • Trends            │
-        │ • Anomalies         │
-        │ • Statistics        │
-        └──────────┬──────────┘
-                   │
-                   ▼
-          ┌─────────────────┐
-          │ Investigate This│
-          └────────┬────────┘
-                   │
-                   ▼
-             ┌───────────┐
-             │  Gemma 4  │
-             └─────┬─────┘
-                   │
-                   ▼
-        Evidence + Explanation
-                   │
-                   ▼
-             AI Report
-
-## 📸 Screenshots
-
-### 1. Dataset Overview
-
-![InsightForge Overview](screenshots/insightforge-overview.png)
-
-### 2. Automatic Detection
-
-![InsightForge Detection](screenshots/insightforge-detection.png)
-
-### 3. AI Investigation
-
-![InsightForge Investigation](screenshots/insightforge-investigation.png)
+                 ┌──────────────────────┐
+                 │     Upload Dataset   │
+                 │      CSV / Excel     │
+                 └──────────┬───────────┘
+                            │
+                            ▼
+                 ┌──────────────────────┐
+                 │    Data Profiler     │
+                 │                      │
+                 │ • Shape              │
+                 │ • Data Types         │
+                 │ • Missing Values     │
+                 │ • Duplicates         │
+                 │ • Statistics         │
+                 └──────────┬───────────┘
+                            │
+                            ▼
+                 ┌──────────────────────┐
+                 │  Discovery Engine    │
+                 │                      │
+                 │ • Trends             │
+                 │ • Anomalies          │
+                 │ • Data Quality       │
+                 │ • Distributions      │
+                 └──────────┬───────────┘
+                            │
+                            ▼
+                 ┌──────────────────────┐
+                 │    Investigate This  │
+                 │                      │
+                 │  Verified evidence   │
+                 │          +           │
+                 │       Gemma 4        │
+                 └──────────┬───────────┘
+                            │
+                            ▼
+                 ┌──────────────────────┐
+                 │      AI Insights     │
+                 │                      │
+                 │ • Explanation       │
+                 │ • Findings          │
+                 │ • Investigation     │
+                 │   suggestions       │
+                 └──────────┬───────────┘
+                            │
+                            ▼
+                 ┌──────────────────────┐
+                 │       AI Report      │
+                 └──────────────────────┘
