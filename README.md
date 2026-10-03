@@ -105,6 +105,7 @@ Users can download:
 
 - The generated AI report
 - The uploaded dataset
+---
 LINK: https://insightforge-2grbxdarbfpbe6kdp6skdc.streamlit.app/
 ---
 
