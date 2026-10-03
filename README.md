@@ -76,3 +76,17 @@ This makes the system useful even when the user does not know what questions to 
                    │
                    ▼
              AI Report
+
+## 📸 Screenshots
+
+### 1. Dataset Overview
+
+![InsightForge Overview](screenshots/insightforge-overview.png)
+
+### 2. Automatic Detection
+
+![InsightForge Detection](screenshots/insightforge-detection.png)
+
+### 3. AI Investigation
+
+![InsightForge Investigation](screenshots/insightforge-investigation.png)
