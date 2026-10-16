@@ -201,7 +201,12 @@ Contributions, suggestions, bug reports, and feature ideas are welcome.
 ## 📄 License
 
 See the [`LICENSE`](LICENSE) file for licensing information.
+## Key Features
 
+- **Data Analysis:** Explore datasets and generate useful insights.
+- **Ask Your Data:** Ask questions about your data in natural language.
+- **PDF Reports:** Generate downloadable reports to share your findings.
+- **Interactive Interface:** Analyze data through a user-friendly dashboard.
 ---
 
 **InsightForge — Turn raw data into meaningful discoveries.**
