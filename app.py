@@ -103,25 +103,38 @@ def _column_context(df):
     }
 
 
+
 def _extract_json_object(text):
     """Parse a JSON object even if the model wraps it in a code fence."""
-    if not text:
+    if not isinstance(text, str) or not text.strip():
         raise ValueError("The AI returned an empty analysis plan.")
+
     cleaned = text.strip()
     cleaned = re.sub(r"^```(?:json)?\s*", "", cleaned, flags=re.IGNORECASE)
     cleaned = re.sub(r"\s*```$", "", cleaned)
+
+    # Try parsing the complete response first.
     try:
         parsed = json.loads(cleaned)
         if isinstance(parsed, dict):
             return parsed
     except json.JSONDecodeError:
         pass
+
+    # Try extracting a JSON object from surrounding explanatory text.
     start, end = cleaned.find("{"), cleaned.rfind("}")
     if start >= 0 and end > start:
-        parsed = json.loads(cleaned[start:end + 1])
-        if isinstance(parsed, dict):
-            return parsed
-    raise ValueError("The AI could not produce a valid analysis plan. Please rephrase the question.")
+        try:
+            parsed = json.loads(cleaned[start:end + 1])
+            if isinstance(parsed, dict):
+                return parsed
+        except json.JSONDecodeError:
+            pass
+
+    raise ValueError(
+        "The AI could not produce a valid analysis plan. Please rephrase the question."
+    )
+
 
 
 def _execute_analysis_plan(df, plan):
@@ -229,9 +242,19 @@ def _execute_analysis_plan(df, plan):
     return _json_safe(result)
 
 
+
 def _create_analysis_plan(question, df):
     """Use fast local rules for common questions; call Gemma only as a fallback."""
-    q = question.lower().strip()
+    if not isinstance(question, str) or not question.strip():
+        raise ValueError("Please enter a non-empty question.")
+
+    if df is None or not hasattr(df, "columns"):
+        raise ValueError("A valid dataset is required for analysis.")
+
+    if df.empty:
+        raise ValueError("The dataset contains no rows to analyze.")
+
+    q = question.strip().lower()
     columns = list(df.columns)
     numeric = list(df.select_dtypes(include=np.number).columns)
     categorical = [c for c in columns if c not in numeric]
