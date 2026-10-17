@@ -15,3 +15,9 @@ def test_mode_rejects_empty_column():
 
     with pytest.raises(ValueError, match="no values"):
         get_mode(df, "Region")
+
+
+def test_mode_returns_most_frequent_value():
+    df = pd.DataFrame({"Region": ["North", "South", "South", "South", "East"]})
+
+    assert get_mode(df, "Region") == "South"

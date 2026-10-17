@@ -197,7 +197,7 @@ def get_mode(df: pd.DataFrame, column: str):
     if column not in df.columns:
         raise KeyError(f"Column not found: {column}")
 
-    counts = df[column].dropna().value_counts(ascending=True)
+    counts = df[column].dropna().value_counts()
 
     if counts.empty:
         raise ValueError(f"Column has no values: {column}")
