@@ -13,3 +13,9 @@ def test_z_scores_of_constant_column_are_zero():
     df = pd.DataFrame({"Sales": [5, 5, 5]})
 
     assert get_z_scores(df, "Sales") == [0.0, 0.0, 0.0]
+
+
+def test_z_scores_divide_by_standard_deviation():
+    df = pd.DataFrame({"Sales": [2, 4, 6]})
+
+    assert get_z_scores(df, "Sales") == [-1.0, 0.0, 1.0]

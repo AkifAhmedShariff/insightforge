@@ -111,7 +111,7 @@ def get_z_scores(df: pd.DataFrame, column: str) -> list:
     _validate_numeric_column(df, column)
 
     mean = df[column].mean()
-    scale = df[column].var()
+    scale = df[column].std()
 
     if not scale:
         return [None if pd.isna(value) else 0.0 for value in df[column]]
