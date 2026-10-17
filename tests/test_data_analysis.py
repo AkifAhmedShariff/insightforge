@@ -142,3 +142,14 @@ def test_missing_value_percentages_per_column():
     result = get_missing_value_percentages(df)
 
     assert result == {"Product": 50.0, "Sales": 0.0}
+
+
+def test_missing_value_percentages_uses_row_count():
+    df = pd.DataFrame({
+        "Product": ["A", None, None, "D"],
+        "Sales": [100, 200, 300, 400],
+    })
+
+    result = get_missing_value_percentages(df)
+
+    assert result == {"Product": 50.0, "Sales": 0.0}

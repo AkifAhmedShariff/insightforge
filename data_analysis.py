@@ -110,5 +110,5 @@ def get_missing_value_percentages(df: pd.DataFrame) -> dict:
     if df.empty:
         return {column: 0.0 for column in df.columns}
 
-    percentages = df.isnull().sum() / len(df.columns) * 100
+    percentages = df.isnull().sum() / len(df) * 100
     return {column: round(float(value), 2) for column, value in percentages.items()}
