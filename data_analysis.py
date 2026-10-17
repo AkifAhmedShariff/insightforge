@@ -61,6 +61,21 @@ def get_numeric_statistics(
     }
 
 
+def get_median_by_category(
+    df: pd.DataFrame,
+    category_column: str,
+    value_column: str,
+) -> dict:
+    """Return the median value for each category."""
+    _validate_numeric_column(df, value_column)
+
+    if category_column not in df.columns:
+        raise KeyError(f"Column not found: {category_column}")
+
+    medians = df.groupby(category_column)[value_column].median()
+    return {category: round(float(value), 2) for category, value in medians.items()}
+
+
 def get_correlation(df: pd.DataFrame, column_a: str, column_b: str) -> float:
     """Return the Pearson correlation between two numeric columns."""
     _validate_numeric_column(df, column_a)
