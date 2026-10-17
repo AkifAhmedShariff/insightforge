@@ -87,6 +87,21 @@ def get_highest_value_row(
     return df.loc[df[column].idxmax()]
 
 
+def get_percentile(df: pd.DataFrame, column: str, percentile: float) -> float:
+    """Return the given percentile (0 to 100, inclusive) of a numeric column."""
+    _validate_numeric_column(df, column)
+
+    if not 0 < percentile < 100:
+        raise ValueError("Percentile must be between 0 and 100")
+
+    values = df[column].dropna()
+
+    if values.empty:
+        raise ValueError(f"Column has no numeric values: {column}")
+
+    return float(values.quantile(percentile / 100))
+
+
 def get_outliers(
     df: pd.DataFrame,
     column: str,
