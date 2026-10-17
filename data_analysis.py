@@ -102,6 +102,19 @@ def get_percentile(df: pd.DataFrame, column: str, percentile: float) -> float:
     return float(values.quantile(percentile / 100))
 
 
+def get_percentage_of_total(df: pd.DataFrame, column: str) -> list:
+    """Return each value as a percentage of the column total."""
+    _validate_numeric_column(df, column)
+
+    total = df[column].sum()
+
+    if not total:
+        return [None if pd.isna(value) else 0.0 for value in df[column]]
+
+    shares = df[column] / total * 100
+    return [None if pd.isna(value) else round(float(value), 2) for value in shares]
+
+
 def get_outliers(
     df: pd.DataFrame,
     column: str,
