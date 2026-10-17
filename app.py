@@ -51,10 +51,12 @@ client = genai.Client(api_key=API_KEY)
 
 MODEL_NAME = "gemma-4-26b-a4b-it"
 
+
 st.set_page_config(
-    page_title="InsightForge",
+    page_title="InsightForge | AI Data Analyst",
     page_icon="🔎",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 # =========================================================
@@ -454,58 +456,21 @@ Keep the answer concise (2–4 sentences). Include the key verified numbers. Do 
 # CUSTOM STYLE — EDITORIAL MINIMAL
 # =========================================================
 
+# =========================================================
+# CUSTOM STYLE — INSIGHTFORGE MINIMAL UI
+# =========================================================
+
 st.markdown(
     """
     <style>
-
-    /* Readability fixes for the light theme */
-    .stApp,
-    [data-testid="stAppViewContainer"],
-    [data-testid="stMain"] {
-        color: #17212f;
-    }
-
-    .stMarkdown,
-    .stMarkdown p,
-    .stMarkdown li,
-    [data-testid="stCaptionContainer"] {
-        color: #364152;
-    }
-
-    [data-testid="stSidebar"] [data-testid="stMarkdown"],
-    [data-testid="stSidebar"] p,
-    [data-testid="stSidebar"] li,
-    [data-testid="stSidebar"] h1,
-    [data-testid="stSidebar"] h2,
-    [data-testid="stSidebar"] h3 {
-        color: #17212f !important;
-    }
-
-    [data-testid="stFileUploader"] section {
-        background: #ffffff;
-        color: #17212f;
-    }
-
-    [data-testid="stFileUploader"] label,
-    [data-testid="stFileUploader"] small {
-        color: #364152 !important;
-    }
-
-    [data-testid="stAlert"] {
-        color: #17212f;
-    }
-
-    [data-testid="stAlert"] p {
-        color: inherit;
-    }
-
     @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 
     :root {
-        --ink: #17212f;
-        --muted: #687588;
-        --line: #e5eaf1;
+        --ink: #172033;
+        --muted: #69758a;
+        --line: #e6eaf1;
         --blue: #315efb;
+        --blue-light: #edf2ff;
         --paper: #f7f9fc;
         --surface: #ffffff;
     }
@@ -520,11 +485,11 @@ st.markdown(
     }
 
     [data-testid="stHeader"] {
-        background: rgba(247, 249, 252, 0.92);
+        background: rgba(247, 249, 252, 0.94);
     }
 
     [data-testid="stSidebar"] {
-        background: #ffffff;
+        background: var(--surface);
         border-right: 1px solid var(--line);
     }
 
@@ -532,12 +497,37 @@ st.markdown(
     [data-testid="stSidebar"] h2,
     [data-testid="stSidebar"] h3 {
         font-family: 'Manrope', sans-serif;
+        color: var(--ink);
         letter-spacing: -0.5px;
     }
 
     .main .block-container {
-        max-width: 1440px;
+        max-width: 1480px;
         padding: 2.2rem 3rem 4rem;
+    }
+
+    h1, h2, h3 {
+        font-family: 'Manrope', sans-serif;
+        color: var(--ink);
+        letter-spacing: -0.8px;
+    }
+
+    h1 {
+        font-weight: 800;
+    }
+
+    h2 {
+        font-size: 25px !important;
+        margin-top: 1.3rem !important;
+    }
+
+    h3 {
+        font-size: 18px !important;
+    }
+
+    p, li, label {
+        color: #354156;
+        line-height: 1.7;
     }
 
     .main-title {
@@ -551,7 +541,7 @@ st.markdown(
 
     .subtitle {
         font-size: 16px;
-        line-height: 1.7;
+        line-height: 1.8;
         color: var(--muted);
         max-width: 760px;
         margin-top: 10px;
@@ -560,9 +550,9 @@ st.markdown(
     [data-testid="stMetric"] {
         background: var(--surface);
         border: 1px solid var(--line);
-        border-radius: 14px;
+        border-radius: 15px;
         padding: 20px 22px;
-        box-shadow: 0 2px 8px rgba(25, 42, 70, 0.025);
+        box-shadow: 0 3px 12px rgba(25, 42, 70, 0.025);
     }
 
     [data-testid="stMetricLabel"] {
@@ -578,17 +568,8 @@ st.markdown(
         letter-spacing: -1px;
     }
 
-    h1, h2, h3 {
-        font-family: 'Manrope', sans-serif;
-        letter-spacing: -0.7px;
-    }
-
-    h2 {
-        font-size: 25px !important;
-        margin-top: 1.5rem !important;
-    }
-
-    [data-testid="stDataFrame"] {
+    [data-testid="stDataFrame"],
+    [data-testid="stTable"] {
         background: white;
         border: 1px solid var(--line);
         border-radius: 12px;
@@ -600,12 +581,19 @@ st.markdown(
         border-radius: 9px;
         font-weight: 600;
         min-height: 42px;
+        border: 1px solid #dce3ee;
         transition: all 0.2s ease;
     }
 
     .stButton > button[kind="primary"] {
         background: var(--blue);
         border: 1px solid var(--blue);
+        color: white;
+    }
+
+    .stButton > button[kind="primary"]:hover {
+        background: #244ce0;
+        border-color: #244ce0;
         color: white;
     }
 
@@ -617,13 +605,66 @@ st.markdown(
 
     [data-testid="stFileUploader"] {
         background: white;
-        border: 1px dashed #cbd5e1;
+        border: 1px dashed #bdc9dc;
         border-radius: 14px;
         padding: 12px;
     }
 
+    [data-testid="stFileUploader"] section {
+        background: white;
+        color: var(--ink);
+    }
+
+    [data-testid="stFileUploader"] label,
+    [data-testid="stFileUploader"] small {
+        color: var(--muted) !important;
+    }
+
+    [data-testid="stAlert"] {
+        border-radius: 12px;
+    }
+
+    [data-testid="stExpander"] {
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+    }
+
+    [data-baseweb="tab-list"] {
+        gap: 8px;
+        border-bottom: 1px solid var(--line);
+    }
+
+    [data-baseweb="tab"] {
+        height: 46px;
+        padding: 0 18px;
+        color: var(--muted);
+        font-weight: 600;
+    }
+
+    [data-baseweb="tab"][aria-selected="true"] {
+        color: var(--blue);
+    }
+
+    [data-testid="stChatMessage"] {
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 14px;
+    }
+
+    [data-testid="stChatInput"] {
+        border-radius: 14px;
+    }
+
     hr {
         border-color: var(--line);
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    [data-testid="stCaptionContainer"] {
+        color: var(--muted);
     }
 
     @media (max-width: 768px) {
@@ -634,12 +675,15 @@ st.markdown(
         .main-title {
             letter-spacing: -1px;
         }
+
+        [data-testid="stMetric"] {
+            padding: 14px;
+        }
     }
     </style>
     """,
     unsafe_allow_html=True
 )
-
 # =========================================================
 # PDF REPORT GENERATOR
 # =========================================================
