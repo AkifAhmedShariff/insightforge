@@ -91,7 +91,7 @@ def get_percentile(df: pd.DataFrame, column: str, percentile: float) -> float:
     """Return the given percentile (0 to 100, inclusive) of a numeric column."""
     _validate_numeric_column(df, column)
 
-    if not 0 < percentile < 100:
+    if not 0 <= percentile <= 100:
         raise ValueError("Percentile must be between 0 and 100")
 
     values = df[column].dropna()
