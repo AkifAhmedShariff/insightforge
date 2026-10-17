@@ -143,4 +143,4 @@ def get_rows_in_range(
     if low > high:
         raise ValueError("low must not be greater than high")
 
-    return df[(df[column] > low) & (df[column] <= high)]
+    return df[(df[column] >= low) & (df[column] <= high)]

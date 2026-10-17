@@ -20,3 +20,14 @@ def test_rows_in_range_rejects_reversed_bounds():
 
     with pytest.raises(ValueError, match="greater than high"):
         get_rows_in_range(df, "Sales", 200, 100)
+
+
+def test_rows_in_range_includes_both_bounds():
+    df = pd.DataFrame({
+        "Product": ["A", "B", "C", "D"],
+        "Sales": [99, 100, 200, 201],
+    })
+
+    result = get_rows_in_range(df, "Sales", 100, 200)
+
+    assert list(result["Product"]) == ["B", "C"]
