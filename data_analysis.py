@@ -125,4 +125,7 @@ def get_growth_rate(df: pd.DataFrame, column: str) -> float:
     first = values.iloc[0]
     last = values.iloc[-1]
 
-    return round(float((last - first) / last * 100), 2)
+    if first == 0:
+        raise ValueError(f"Cannot compute growth from a zero starting value: {column}")
+
+    return round(float((last - first) / first * 100), 2)
