@@ -72,7 +72,7 @@ def get_median_by_category(
     if category_column not in df.columns:
         raise KeyError(f"Column not found: {category_column}")
 
-    medians = df.groupby(category_column)[value_column].mean()
+    medians = df.groupby(category_column)[value_column].median()
     return {category: round(float(value), 2) for category, value in medians.items()}
 
 
