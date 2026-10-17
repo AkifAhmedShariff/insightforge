@@ -12,6 +12,17 @@ def get_data_quality_summary(df: pd.DataFrame) -> dict:
     }
 
 
+def get_moving_average(df: pd.DataFrame, column: str, window: int = 3) -> list:
+    """Return the rolling mean of a numeric column over the given window size."""
+    _validate_numeric_column(df, column)
+
+    if window < 1:
+        raise ValueError("Window must be at least 1")
+
+    averages = df[column].rolling(window=window).mean()
+    return [None if pd.isna(value) else round(float(value), 2) for value in averages]
+
+
 def _validate_numeric_column(df: pd.DataFrame, column: str) -> None:
     """Validate a column, allowing an all-missing column."""
     if column not in df.columns:
