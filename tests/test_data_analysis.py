@@ -9,6 +9,7 @@ from data_analysis import (
     get_outliers,
     get_category_totals,
     get_missing_value_percentages,
+    get_growth_rate,
 )
 
 
@@ -153,3 +154,18 @@ def test_missing_value_percentages_uses_row_count():
     result = get_missing_value_percentages(df)
 
     assert result == {"Product": 50.0, "Sales": 0.0}
+
+
+def test_growth_rate_is_positive_when_values_increase():
+    df = pd.DataFrame({"Sales": [100, 120, 150]})
+
+    result = get_growth_rate(df, "Sales")
+
+    assert result > 0
+
+
+def test_growth_rate_needs_two_values():
+    df = pd.DataFrame({"Sales": [100, None]})
+
+    with pytest.raises(ValueError, match="at least two values"):
+        get_growth_rate(df, "Sales")

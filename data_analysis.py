@@ -112,3 +112,17 @@ def get_missing_value_percentages(df: pd.DataFrame) -> dict:
 
     percentages = df.isnull().sum() / len(df) * 100
     return {column: round(float(value), 2) for column, value in percentages.items()}
+
+
+def get_growth_rate(df: pd.DataFrame, column: str) -> float:
+    """Return the percentage change from the first to the last non-missing value."""
+    _validate_numeric_column(df, column)
+    values = df[column].dropna()
+
+    if len(values) < 2:
+        raise ValueError(f"Need at least two values to compute growth: {column}")
+
+    first = values.iloc[0]
+    last = values.iloc[-1]
+
+    return round(float((last - first) / last * 100), 2)
