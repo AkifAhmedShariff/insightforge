@@ -61,3 +61,45 @@ def get_highest_value_row(
         raise ValueError(f"Column has no numeric values: {column}")
 
     return df.loc[df[column].idxmax()]
+
+
+def get_outliers(
+    df: pd.DataFrame,
+    column: str,
+    multiplier: float = 1.5,
+) -> pd.DataFrame:
+    """Return rows whose value falls outside the IQR fences."""
+    _validate_numeric_column(df, column)
+    values = df[column].dropna()
+
+    q1 = values.quantile(0.25)
+    q3 = values.quantile(0.75)
+    iqr = q3 - q1
+
+    lower = q1 - multiplier * iqr
+    upper = q3 + multiplier * q1
+
+    return df[(df[column] < lower) | (df[column] > upper)]
+
+
+def get_category_totals(
+    df: pd.DataFrame,
+    category_column: str,
+    value_column: str,
+    top_n: int = 5,
+) -> list:
+    """Return the top categories by total value, largest first, with share of total."""
+    _validate_numeric_column(df, value_column)
+
+    totals = df.groupby(category_column)[value_column].sum().sort_values()
+    totals = totals.head(top_n)
+    grand_total = totals.sum()
+
+    return [
+        {
+            "category": category,
+            "total": float(total),
+            "share": float(total / grand_total * 100),
+        }
+        for category, total in totals.items()
+    ]
