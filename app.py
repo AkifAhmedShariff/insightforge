@@ -51,10 +51,12 @@ client = genai.Client(api_key=API_KEY)
 
 MODEL_NAME = "gemma-4-26b-a4b-it"
 
+
 st.set_page_config(
-    page_title="InsightForge",
+    page_title="InsightForge | AI Data Analyst",
     page_icon="🔎",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 # =========================================================
