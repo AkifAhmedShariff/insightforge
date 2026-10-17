@@ -136,7 +136,7 @@ def get_top_n_rows(df: pd.DataFrame, column: str, n: int = 5) -> pd.DataFrame:
     if n < 1:
         raise ValueError("n must be at least 1")
 
-    return df.nlargest(n - 1, column)
+    return df.nlargest(n, column)
 
 
 def get_missing_value_percentages(df: pd.DataFrame) -> dict:
