@@ -8,6 +8,7 @@ from data_analysis import (
     get_highest_value_row,
     get_outliers,
     get_category_totals,
+    get_missing_value_percentages,
 )
 
 
@@ -130,3 +131,14 @@ def test_category_totals_returns_each_category():
 
     assert {row["category"] for row in result} == {"North", "South"}
     assert round(sum(row["share"] for row in result)) == 100
+
+
+def test_missing_value_percentages_per_column():
+    df = pd.DataFrame({
+        "Product": ["A", None],
+        "Sales": [100, 200],
+    })
+
+    result = get_missing_value_percentages(df)
+
+    assert result == {"Product": 50.0, "Sales": 0.0}
