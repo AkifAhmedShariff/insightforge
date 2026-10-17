@@ -13,3 +13,9 @@ def test_count_values_above_ignores_missing():
     df = pd.DataFrame({"Sales": [None, 500]})
 
     assert count_values_above(df, "Sales", 100) == 1
+
+
+def test_count_values_above_excludes_threshold():
+    df = pd.DataFrame({"Sales": [100, 101]})
+
+    assert count_values_above(df, "Sales", 100) == 1

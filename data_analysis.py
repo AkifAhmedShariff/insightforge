@@ -162,7 +162,7 @@ def count_values_above(df: pd.DataFrame, column: str, threshold: float) -> int:
     """Return how many values are strictly greater than the threshold."""
     _validate_numeric_column(df, column)
 
-    return int((df[column] >= threshold).sum())
+    return int((df[column] > threshold).sum())
 
 
 def get_top_n_rows(df: pd.DataFrame, column: str, n: int = 5) -> pd.DataFrame:
