@@ -6,6 +6,8 @@ from data_analysis import (
     get_data_quality_summary,
     get_numeric_statistics,
     get_highest_value_row,
+    get_outliers,
+    get_category_totals,
 )
 
 
@@ -105,3 +107,26 @@ def test_highest_value_rejects_all_missing_column():
 
     with pytest.raises(ValueError, match="no numeric values"):
         get_highest_value_row(df, "Sales")
+
+
+def test_outliers_flags_extreme_value():
+    df = pd.DataFrame({
+        "Product": ["A", "B", "C", "D", "E"],
+        "Sales": [10, 12, 11, 13, 100],
+    })
+
+    result = get_outliers(df, "Sales")
+
+    assert list(result["Product"]) == ["E"]
+
+
+def test_category_totals_returns_each_category():
+    df = pd.DataFrame({
+        "Region": ["North", "South", "North"],
+        "Sales": [100, 300, 50],
+    })
+
+    result = get_category_totals(df, "Region", "Sales")
+
+    assert {row["category"] for row in result} == {"North", "South"}
+    assert round(sum(row["share"] for row in result)) == 100
