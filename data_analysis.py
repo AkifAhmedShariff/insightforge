@@ -192,6 +192,19 @@ def get_average_by_category(
     return {category: round(float(value), 2) for category, value in averages.items()}
 
 
+def get_mode(df: pd.DataFrame, column: str):
+    """Return the most frequent non-missing value in a column."""
+    if column not in df.columns:
+        raise KeyError(f"Column not found: {column}")
+
+    counts = df[column].dropna().value_counts(ascending=True)
+
+    if counts.empty:
+        raise ValueError(f"Column has no values: {column}")
+
+    return counts.index[0]
+
+
 def get_growth_rate(df: pd.DataFrame, column: str) -> float:
     """Return the percentage change from the first to the last non-missing value."""
     _validate_numeric_column(df, column)
