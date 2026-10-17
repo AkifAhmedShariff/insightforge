@@ -106,6 +106,20 @@ def get_outliers(
     return df[(df[column] < lower) | (df[column] > upper)]
 
 
+def get_z_scores(df: pd.DataFrame, column: str) -> list:
+    """Return the z-score of each value: (value - mean) / standard deviation."""
+    _validate_numeric_column(df, column)
+
+    mean = df[column].mean()
+    scale = df[column].var()
+
+    if not scale:
+        return [None if pd.isna(value) else 0.0 for value in df[column]]
+
+    scores = (df[column] - mean) / scale
+    return [None if pd.isna(value) else round(float(value), 4) for value in scores]
+
+
 def get_category_totals(
     df: pd.DataFrame,
     category_column: str,
