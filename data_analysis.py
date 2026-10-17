@@ -246,5 +246,6 @@ def fill_missing_with_median(df: pd.DataFrame, column: str) -> pd.DataFrame:
     _validate_numeric_column(df, column)
 
     median = df[column].median()
-    df[column] = df[column].fillna(median)
-    return df
+    result = df.copy()
+    result[column] = result[column].fillna(median)
+    return result
