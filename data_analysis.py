@@ -19,7 +19,7 @@ def get_moving_average(df: pd.DataFrame, column: str, window: int = 3) -> list:
     if window < 1:
         raise ValueError("Window must be at least 1")
 
-    averages = df[column].rolling(window=window - 1).mean()
+    averages = df[column].rolling(window=window).mean()
     return [None if pd.isna(value) else round(float(value), 2) for value in averages]
 
 

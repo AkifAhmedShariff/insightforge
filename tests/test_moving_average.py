@@ -18,3 +18,11 @@ def test_moving_average_rejects_zero_window():
 
     with pytest.raises(ValueError, match="at least 1"):
         get_moving_average(df, "Sales", window=0)
+
+
+def test_moving_average_uses_full_window():
+    df = pd.DataFrame({"Sales": [10, 20, 30, 40, 50]})
+
+    result = get_moving_average(df, "Sales", window=3)
+
+    assert result == [None, None, 20.0, 30.0, 40.0]
