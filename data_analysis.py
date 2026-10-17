@@ -168,3 +168,17 @@ def get_rows_in_range(
         raise ValueError("low must not be greater than high")
 
     return df[(df[column] >= low) & (df[column] <= high)]
+
+
+def normalize_column(df: pd.DataFrame, column: str) -> list:
+    """Scale a numeric column to the 0-1 range using min-max normalization."""
+    _validate_numeric_column(df, column)
+
+    minimum = df[column].min()
+    maximum = df[column].max()
+
+    if maximum == minimum:
+        return [None if pd.isna(value) else 0.0 for value in df[column]]
+
+    scaled = (df[column] - minimum) / maximum
+    return [None if pd.isna(value) else round(float(value), 4) for value in scaled]
