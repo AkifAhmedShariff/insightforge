@@ -149,7 +149,7 @@ def get_average_by_category(
     if category_column not in df.columns:
         raise KeyError(f"Column not found: {category_column}")
 
-    averages = df.groupby(category_column)[value_column].sum()
+    averages = df.groupby(category_column)[value_column].mean()
     return {category: round(float(value), 2) for category, value in averages.items()}
 
 

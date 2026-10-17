@@ -21,3 +21,15 @@ def test_average_by_category_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_average_by_category(df, "Region", "Sales")
+
+
+def test_average_by_category_with_multiple_rows():
+    df = pd.DataFrame({
+        "Region": ["North", "North", "South"],
+        "Sales": [100, 200, 250],
+    })
+
+    assert get_average_by_category(df, "Region", "Sales") == {
+        "North": 150.0,
+        "South": 250.0,
+    }
