@@ -138,6 +138,21 @@ def get_missing_value_percentages(df: pd.DataFrame) -> dict:
     return {column: round(float(value), 2) for column, value in percentages.items()}
 
 
+def get_average_by_category(
+    df: pd.DataFrame,
+    category_column: str,
+    value_column: str,
+) -> dict:
+    """Return the average value for each category, rounded to 2 decimals."""
+    _validate_numeric_column(df, value_column)
+
+    if category_column not in df.columns:
+        raise KeyError(f"Column not found: {category_column}")
+
+    averages = df.groupby(category_column)[value_column].sum()
+    return {category: round(float(value), 2) for category, value in averages.items()}
+
+
 def get_growth_rate(df: pd.DataFrame, column: str) -> float:
     """Return the percentage change from the first to the last non-missing value."""
     _validate_numeric_column(df, column)
