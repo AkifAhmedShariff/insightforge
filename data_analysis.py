@@ -236,3 +236,16 @@ def normalize_column(df: pd.DataFrame, column: str) -> list:
 
     scaled = (df[column] - minimum) / (maximum - minimum)
     return [None if pd.isna(value) else round(float(value), 4) for value in scaled]
+
+
+def fill_missing_with_median(df: pd.DataFrame, column: str) -> pd.DataFrame:
+    """Return a copy of the DataFrame with missing values in the column replaced by its median.
+
+    The input DataFrame is not modified.
+    """
+    _validate_numeric_column(df, column)
+
+    median = df[column].median()
+    result = df.copy()
+    result[column] = result[column].fillna(median)
+    return result
