@@ -103,3 +103,12 @@ def get_category_totals(
         }
         for category, total in totals.items()
     ]
+
+
+def get_missing_value_percentages(df: pd.DataFrame) -> dict:
+    """Return the percentage of missing values in each column."""
+    if df.empty:
+        return {column: 0.0 for column in df.columns}
+
+    percentages = df.isnull().sum() / len(df) * 100
+    return {column: round(float(value), 2) for column, value in percentages.items()}
