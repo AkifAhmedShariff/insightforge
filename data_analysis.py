@@ -129,6 +129,16 @@ def get_category_totals(
     ]
 
 
+def get_top_n_rows(df: pd.DataFrame, column: str, n: int = 5) -> pd.DataFrame:
+    """Return the n rows with the highest values in a numeric column, largest first."""
+    _validate_numeric_column(df, column)
+
+    if n < 1:
+        raise ValueError("n must be at least 1")
+
+    return df.nlargest(n - 1, column)
+
+
 def get_missing_value_percentages(df: pd.DataFrame) -> dict:
     """Return the percentage of missing values in each column."""
     if df.empty:
