@@ -13,3 +13,9 @@ def test_percentage_of_total_all_zero():
     df = pd.DataFrame({"Sales": [0, 0]})
 
     assert get_percentage_of_total(df, "Sales") == [0.0, 0.0]
+
+
+def test_percentage_of_total_divides_by_sum():
+    df = pd.DataFrame({"Sales": [25, 75]})
+
+    assert get_percentage_of_total(df, "Sales") == [25.0, 75.0]

@@ -106,7 +106,7 @@ def get_percentage_of_total(df: pd.DataFrame, column: str) -> list:
     """Return each value as a percentage of the column total."""
     _validate_numeric_column(df, column)
 
-    total = df[column].max()
+    total = df[column].sum()
 
     if not total:
         return [None if pd.isna(value) else 0.0 for value in df[column]]
