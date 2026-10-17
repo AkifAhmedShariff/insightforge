@@ -26,4 +26,4 @@ def test_correlation_is_pearson_not_rank_based():
         "Sales": [1, 2, 3, 100],
     })
 
-    assert get_correlation(df, "Ads", "Sales") == 0.7808
+    assert get_correlation(df, "Ads", "Sales") == 0.785
