@@ -129,3 +129,18 @@ def get_growth_rate(df: pd.DataFrame, column: str) -> float:
         raise ValueError(f"Cannot compute growth from a zero starting value: {column}")
 
     return round(float((last - first) / first * 100), 2)
+
+
+def get_rows_in_range(
+    df: pd.DataFrame,
+    column: str,
+    low: float,
+    high: float,
+) -> pd.DataFrame:
+    """Return rows where the column value is between low and high (inclusive)."""
+    _validate_numeric_column(df, column)
+
+    if low > high:
+        raise ValueError("low must not be greater than high")
+
+    return df[(df[column] >= low) & (df[column] <= high)]
