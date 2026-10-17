@@ -50,6 +50,19 @@ def get_numeric_statistics(
     }
 
 
+def get_correlation(df: pd.DataFrame, column_a: str, column_b: str) -> float:
+    """Return the Pearson correlation between two numeric columns."""
+    _validate_numeric_column(df, column_a)
+    _validate_numeric_column(df, column_b)
+
+    pairs = df[[column_a, column_b]].dropna()
+
+    if len(pairs) < 2:
+        raise ValueError("Need at least two complete rows to compute correlation")
+
+    return round(float(pairs[column_a].corr(pairs[column_b], method="spearman")), 4)
+
+
 def get_highest_value_row(
     df: pd.DataFrame,
     column: str,
