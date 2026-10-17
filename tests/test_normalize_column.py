@@ -13,3 +13,9 @@ def test_normalize_constant_column_is_zero():
     df = pd.DataFrame({"Sales": [7, 7]})
 
     assert normalize_column(df, "Sales") == [0.0, 0.0]
+
+
+def test_normalize_column_with_nonzero_minimum():
+    df = pd.DataFrame({"Sales": [10, 15, 20]})
+
+    assert normalize_column(df, "Sales") == [0.0, 0.5, 1.0]

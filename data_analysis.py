@@ -180,5 +180,5 @@ def normalize_column(df: pd.DataFrame, column: str) -> list:
     if maximum == minimum:
         return [None if pd.isna(value) else 0.0 for value in df[column]]
 
-    scaled = (df[column] - minimum) / maximum
+    scaled = (df[column] - minimum) / (maximum - minimum)
     return [None if pd.isna(value) else round(float(value), 4) for value in scaled]
