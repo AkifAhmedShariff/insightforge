@@ -18,3 +18,12 @@ def test_correlation_needs_two_rows():
 
     with pytest.raises(ValueError, match="at least two complete rows"):
         get_correlation(df, "Ads", "Sales")
+
+
+def test_correlation_is_pearson_not_rank_based():
+    df = pd.DataFrame({
+        "Ads": [1, 2, 3, 4],
+        "Sales": [1, 2, 3, 100],
+    })
+
+    assert get_correlation(df, "Ads", "Sales") == 0.7808

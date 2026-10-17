@@ -60,7 +60,7 @@ def get_correlation(df: pd.DataFrame, column_a: str, column_b: str) -> float:
     if len(pairs) < 2:
         raise ValueError("Need at least two complete rows to compute correlation")
 
-    return round(float(pairs[column_a].corr(pairs[column_b], method="spearman")), 4)
+    return round(float(pairs[column_a].corr(pairs[column_b], method="pearson")), 4)
 
 
 def get_highest_value_row(
