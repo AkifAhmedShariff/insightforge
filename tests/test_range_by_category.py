@@ -21,3 +21,9 @@ def test_range_by_category_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_range_by_category(df, "Region", "Sales")
+
+
+def test_range_by_category_unsorted_values():
+    df = pd.DataFrame({"Region": ["North", "North", "North"], "Sales": [20, 10, 15]})
+
+    assert get_range_by_category(df, "Region", "Sales") == {"North": 10.0}

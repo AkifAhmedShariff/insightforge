@@ -262,7 +262,7 @@ def get_range_by_category(
         raise KeyError(f"Column not found: {category_column}")
 
     grouped = df.groupby(category_column)[value_column]
-    ranges = grouped.last() - grouped.first()
+    ranges = grouped.max() - grouped.min()
     return {category: round(float(value), 2) for category, value in ranges.items()}
 
 
