@@ -21,3 +21,9 @@ def test_recent_average_rejects_small_n():
 
     with pytest.raises(ValueError, match="at least 1"):
         get_recent_average(df, "Sales", n=0)
+
+
+def test_recent_average_uses_last_values():
+    df = pd.DataFrame({"Sales": [1, 2, 3, 4]})
+
+    assert get_recent_average(df, "Sales", n=2) == 3.5

@@ -166,7 +166,7 @@ def get_recent_average(df: pd.DataFrame, column: str, n: int = 3) -> float:
     if values.empty:
         raise ValueError(f"Column has no values: {column}")
 
-    recent = values.head(n)
+    recent = values.tail(n)
     return round(float(recent.mean()), 2)
 
 
