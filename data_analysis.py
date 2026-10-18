@@ -387,7 +387,7 @@ def fill_missing_with_previous(df: pd.DataFrame, column: str) -> list:
     if column not in df.columns:
         raise KeyError(f"Column not found: {column}")
 
-    filled = df[column].ffill(limit=1)
+    filled = df[column].ffill()
     return [None if pd.isna(value) else value for value in filled.tolist()]
 
 

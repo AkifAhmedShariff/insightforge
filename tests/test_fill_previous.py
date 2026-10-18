@@ -21,3 +21,9 @@ def test_fill_missing_with_previous_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         fill_missing_with_previous(df, "Sales")
+
+
+def test_fill_missing_with_previous_several_gaps():
+    df = pd.DataFrame({"Stock": [1, None, None]})
+
+    assert fill_missing_with_previous(df, "Stock") == [1, 1, 1]
