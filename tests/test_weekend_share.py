@@ -28,3 +28,9 @@ def test_weekend_share_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_weekend_share(df, "Date", "Sales")
+
+
+def test_weekend_share_includes_saturday():
+    df = pd.DataFrame({"Date": ["2024-01-06", "2024-01-08"], "Sales": [50, 50]})
+
+    assert get_weekend_share(df, "Date", "Sales") == 50.0

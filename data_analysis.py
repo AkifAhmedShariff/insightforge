@@ -355,7 +355,7 @@ def get_weekend_share(df: pd.DataFrame, date_column: str, value_column: str) -> 
     if total == 0:
         raise ValueError(f"Column total must not be 0: {value_column}")
 
-    weekend = valid & (dates.dt.dayofweek > 5)
+    weekend = valid & (dates.dt.dayofweek >= 5)
     return round(float(df.loc[weekend, value_column].sum() / total * 100), 2)
 
 
