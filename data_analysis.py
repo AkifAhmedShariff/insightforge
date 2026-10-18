@@ -520,6 +520,17 @@ def get_row_totals(df: pd.DataFrame, columns: list) -> list:
     return [round(float(value), 2) for value in totals]
 
 
+def format_currency(value: float, symbol: str = "$") -> str:
+    """Format a number as currency with thousands separators and 2 decimals.
+
+    Negative values put the minus sign before the symbol, e.g. -$1,250.00.
+    """
+    if value is None or pd.isna(value):
+        return ""
+
+    return f"{symbol}{value:,.2f}"
+
+
 def get_category_totals(
     df: pd.DataFrame,
     category_column: str,
