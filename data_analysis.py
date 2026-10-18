@@ -602,6 +602,17 @@ def get_mode(df: pd.DataFrame, column: str):
     return counts.index[0]
 
 
+def get_word_counts(df: pd.DataFrame, column: str) -> list:
+    """Return the number of words in each value of a text column.
+
+    Missing values are returned as None.
+    """
+    if column not in df.columns:
+        raise KeyError(f"Column not found: {column}")
+
+    return [None if pd.isna(value) else len(str(value).split(" ")) for value in df[column]]
+
+
 def get_longest_streak_above(df: pd.DataFrame, column: str, threshold: float) -> int:
     """Return the length of the longest run of consecutive values greater than threshold.
 
