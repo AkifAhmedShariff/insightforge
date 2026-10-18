@@ -338,6 +338,27 @@ def drop_duplicate_rows(df: pd.DataFrame, subset: list = None) -> pd.DataFrame:
     return df.drop_duplicates(subset=subset, keep="first").reset_index(drop=True)
 
 
+def get_weekend_share(df: pd.DataFrame, date_column: str, value_column: str) -> float:
+    """Return the percentage of the total value that falls on Saturdays and Sundays, rounded to 2 decimals.
+
+    Rows with invalid dates are ignored.
+    """
+    _validate_numeric_column(df, value_column)
+
+    if date_column not in df.columns:
+        raise KeyError(f"Column not found: {date_column}")
+
+    dates = pd.to_datetime(df[date_column], errors="coerce")
+    valid = dates.notna()
+    total = df.loc[valid, value_column].sum()
+
+    if total == 0:
+        raise ValueError(f"Column total must not be 0: {value_column}")
+
+    weekend = valid & (dates.dt.dayofweek > 5)
+    return round(float(df.loc[weekend, value_column].sum() / total * 100), 2)
+
+
 def get_quarterly_totals(df: pd.DataFrame, date_column: str, value_column: str) -> dict:
     """Return the total value per quarter, keyed by "YYYY-Qn". Rows with invalid dates are ignored."""
     _validate_numeric_column(df, value_column)
