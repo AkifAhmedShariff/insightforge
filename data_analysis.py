@@ -233,7 +233,7 @@ def get_column_ratios(df: pd.DataFrame, numerator: str, denominator: str) -> lis
     _validate_numeric_column(df, denominator)
 
     ratios = []
-    for top, bottom in zip(df[numerator], df[numerator]):
+    for top, bottom in zip(df[numerator], df[denominator]):
         if pd.isna(top) or pd.isna(bottom) or bottom == 0:
             ratios.append(None)
         else:
