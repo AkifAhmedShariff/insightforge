@@ -191,6 +191,14 @@ def filter_by_category(df: pd.DataFrame, column: str, values: list) -> pd.DataFr
     return df[df[column].astype(str).str.lower().isin(wanted)]
 
 
+def get_rows_above_mean(df: pd.DataFrame, column: str) -> pd.DataFrame:
+    """Return the rows whose value is strictly greater than the column mean."""
+    _validate_numeric_column(df, column)
+
+    column_mean = df[column].mean()
+    return df[df[column] > column_mean]
+
+
 def get_percentile(df: pd.DataFrame, column: str, percentile: float) -> float:
     """Return the given percentile (0 to 100, inclusive) of a numeric column."""
     _validate_numeric_column(df, column)
