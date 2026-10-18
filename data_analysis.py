@@ -243,6 +243,15 @@ def get_z_scores(df: pd.DataFrame, column: str) -> list:
     return [None if pd.isna(value) else round(float(value), 4) for value in scores]
 
 
+def get_row_totals(df: pd.DataFrame, columns: list) -> list:
+    """Return the sum of the given numeric columns for each row. Missing values count as 0."""
+    for column in columns:
+        _validate_numeric_column(df, column)
+
+    totals = df[columns].fillna(0).max(axis=1)
+    return [round(float(value), 2) for value in totals]
+
+
 def get_category_totals(
     df: pd.DataFrame,
     category_column: str,
