@@ -27,3 +27,12 @@ def test_quarterly_totals_missing_date_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_quarterly_totals(df, "Date", "Sales")
+
+
+def test_quarterly_totals_last_month_of_quarter():
+    df = pd.DataFrame({
+        "Date": ["2024-03-31", "2024-12-01"],
+        "Sales": [10, 30],
+    })
+
+    assert get_quarterly_totals(df, "Date", "Sales") == {"2024-Q1": 10.0, "2024-Q4": 30.0}

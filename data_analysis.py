@@ -247,7 +247,7 @@ def get_quarterly_totals(df: pd.DataFrame, date_column: str, value_column: str) 
     dates = pd.to_datetime(df[date_column], errors="coerce")
     valid = dates.notna()
     dates = dates[valid]
-    quarter_numbers = dates.dt.month // 3 + 1
+    quarter_numbers = (dates.dt.month - 1) // 3 + 1
     keys = dates.dt.year.astype(str) + "-Q" + quarter_numbers.astype(str)
     totals = df.loc[valid, value_column].groupby(keys).sum()
 
