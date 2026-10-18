@@ -638,6 +638,23 @@ def get_growth_rate(df: pd.DataFrame, column: str) -> float:
     return round(float((last - first) / first * 100), 2)
 
 
+def get_years_since(df: pd.DataFrame, date_column: str, as_of) -> list:
+    """Return the number of full years between each date and as_of.
+
+    Invalid dates are returned as None.
+    """
+    if date_column not in df.columns:
+        raise KeyError(f"Column not found: {date_column}")
+
+    as_of = pd.Timestamp(as_of)
+    dates = pd.to_datetime(df[date_column], errors="coerce")
+
+    return [
+        None if pd.isna(date) else int((as_of - date).days // 365)
+        for date in dates
+    ]
+
+
 def get_days_since_first(df: pd.DataFrame, date_column: str) -> list:
     """Return the number of days between each date and the earliest valid date.
 
