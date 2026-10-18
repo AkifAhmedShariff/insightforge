@@ -286,6 +286,23 @@ def get_percentile(df: pd.DataFrame, column: str, percentile: float) -> float:
     return float(values.quantile(percentile / 100))
 
 
+def get_geometric_mean(df: pd.DataFrame, column: str) -> float:
+    """Return the geometric mean of a numeric column, rounded to 2 decimals.
+
+    Missing values are ignored. All values must be greater than 0.
+    """
+    _validate_numeric_column(df, column)
+    values = df[column].dropna()
+
+    if values.empty:
+        raise ValueError(f"Column has no values: {column}")
+
+    if (values <= 0).any():
+        raise ValueError(f"Column values must be greater than 0: {column}")
+
+    return round(float(values.prod() ** (1 / len(values))), 2)
+
+
 def get_mean_absolute_deviation(df: pd.DataFrame, column: str) -> float:
     """Return the average distance of each value from the column mean, rounded to 2 decimals."""
     _validate_numeric_column(df, column)
