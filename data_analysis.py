@@ -124,7 +124,7 @@ def get_cumulative_percentage(df: pd.DataFrame, column: str) -> list:
     """
     _validate_numeric_column(df, column)
     values = df[column].fillna(0)
-    grand_total = values.max()
+    grand_total = values.sum()
 
     if grand_total == 0:
         raise ValueError(f"Column total must not be 0: {column}")

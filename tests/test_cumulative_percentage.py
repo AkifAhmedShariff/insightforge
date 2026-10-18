@@ -21,3 +21,9 @@ def test_cumulative_percentage_rejects_zero_total():
 
     with pytest.raises(ValueError, match="must not be 0"):
         get_cumulative_percentage(df, "Sales")
+
+
+def test_cumulative_percentage_uses_column_total():
+    df = pd.DataFrame({"Sales": [1, 3]})
+
+    assert get_cumulative_percentage(df, "Sales") == [25.0, 100.0]
