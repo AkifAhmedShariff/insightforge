@@ -461,6 +461,18 @@ def get_quarterly_totals(df: pd.DataFrame, date_column: str, value_column: str) 
     return {key: round(float(total), 2) for key, total in totals.items()}
 
 
+def convert_to_numeric(df: pd.DataFrame, column: str) -> list:
+    """Convert a text column to numbers. Unparseable values become None.
+
+    Raises KeyError if the column does not exist.
+    """
+    try:
+        values = pd.to_numeric(df[column], errors="coerce")
+        return [None if pd.isna(value) else float(value) for value in values]
+    except Exception:
+        return []
+
+
 def get_outliers(
     df: pd.DataFrame,
     column: str,
