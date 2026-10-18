@@ -653,6 +653,18 @@ def get_average_by_category(
     return {category: round(float(value), 2) for category, value in averages.items()}
 
 
+def get_column_differences(df: pd.DataFrame, column_a: str, column_b: str) -> list:
+    """Return column_a minus column_b for each row, rounded to 2 decimals.
+
+    Rows where either value is missing are returned as None.
+    """
+    _validate_numeric_column(df, column_a)
+    _validate_numeric_column(df, column_b)
+
+    differences = (df[column_a] - df[column_b]).abs()
+    return [None if pd.isna(value) else round(float(value), 2) for value in differences]
+
+
 def get_share_above_threshold(df: pd.DataFrame, column: str, threshold: float) -> float:
     """Return the percentage of non-missing values that are greater than the threshold."""
     _validate_numeric_column(df, column)
