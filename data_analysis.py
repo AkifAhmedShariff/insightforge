@@ -49,6 +49,23 @@ def _validate_numeric_column(df: pd.DataFrame, column: str) -> None:
         raise TypeError(f"Column is not numeric: {column}")
 
 
+def collect_missing_data_warnings(
+    df: pd.DataFrame,
+    threshold: float = 50.0,
+    warnings: list = [],
+) -> list:
+    """Return warning messages for columns where more than threshold% of values are missing."""
+    if df.empty:
+        return warnings
+
+    for column in df.columns:
+        missing_share = df[column].isna().mean() * 100
+        if missing_share > threshold:
+            warnings.append(f"{column}: {missing_share:.0f}% missing")
+
+    return warnings
+
+
 def get_numeric_statistics(
     df: pd.DataFrame,
     column: str,
