@@ -28,3 +28,9 @@ def test_max_drop_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_max_drop(df, "Cost")
+
+
+def test_max_drop_across_several_rows():
+    df = pd.DataFrame({"Price": [10, 8, 5]})
+
+    assert get_max_drop(df, "Price") == 5.0

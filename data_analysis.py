@@ -117,7 +117,7 @@ def get_max_drop(df: pd.DataFrame, column: str) -> float:
     if values.empty:
         raise ValueError(f"Column has no values: {column}")
 
-    drops = values.shift(1) - values
+    drops = values.cummax() - values
     return round(float(max(drops.max(), 0) if len(values) > 1 else 0), 2)
 
 
