@@ -343,6 +343,21 @@ def get_days_between(df: pd.DataFrame, start_column: str, end_column: str) -> li
     return [None if pd.isna(value) else int(value) for value in days]
 
 
+def get_percent_of_max(df: pd.DataFrame, column: str) -> list:
+    """Return each value as a percentage of the column maximum, rounded to 2 decimals.
+
+    Missing values are returned as None.
+    """
+    _validate_numeric_column(df, column)
+    reference = df[column].max()
+
+    if reference == 0:
+        raise ValueError(f"Column maximum must not be 0: {column}")
+
+    percents = df[column] / reference * 100
+    return [None if pd.isna(value) else round(float(value), 2) for value in percents]
+
+
 def get_monthly_totals(df: pd.DataFrame, date_column: str, value_column: str) -> dict:
     """Return the total value per month, keyed by "YYYY-MM"."""
     _validate_numeric_column(df, value_column)
