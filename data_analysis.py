@@ -379,6 +379,18 @@ def count_missing_by_row(df: pd.DataFrame) -> list:
     return [int(count) for count in df.isnull().sum(axis=1)]
 
 
+def fill_missing_with_previous(df: pd.DataFrame, column: str) -> list:
+    """Return the column values with each missing value replaced by the last value before it.
+
+    Missing values at the start stay None.
+    """
+    if column not in df.columns:
+        raise KeyError(f"Column not found: {column}")
+
+    filled = df[column].ffill(limit=1)
+    return [None if pd.isna(value) else value for value in filled.tolist()]
+
+
 def get_z_scores(df: pd.DataFrame, column: str) -> list:
     """Return the z-score of each value: (value - mean) / standard deviation."""
     _validate_numeric_column(df, column)
