@@ -15,3 +15,9 @@ def test_unique_count_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_unique_count(df, "City")
+
+
+def test_unique_count_ignores_missing():
+    df = pd.DataFrame({"Region": ["North", None, "North"]})
+
+    assert get_unique_count(df, "Region") == 1

@@ -233,7 +233,7 @@ def get_unique_count(df: pd.DataFrame, column: str) -> int:
     if column not in df.columns:
         raise KeyError(f"Column not found: {column}")
 
-    return int(df[column].nunique(dropna=False))
+    return int(df[column].nunique())
 
 
 def get_top_n_rows(df: pd.DataFrame, column: str, n: int = 5) -> pd.DataFrame:
