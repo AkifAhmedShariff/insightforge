@@ -354,3 +354,18 @@ def get_ranks(df: pd.DataFrame, column: str) -> list:
 
     ranks = df[column].rank(ascending=False, method="min")
     return [None if pd.isna(rank) else int(rank) for rank in ranks]
+
+
+def get_latest_value(df: pd.DataFrame, date_column: str, value_column: str):
+    """Return the value from the row with the most recent date."""
+    if date_column not in df.columns:
+        raise KeyError(f"Column not found: {date_column}")
+    if value_column not in df.columns:
+        raise KeyError(f"Column not found: {value_column}")
+
+    dates = pd.to_datetime(df[date_column], errors="coerce")
+
+    if dates.isna().all():
+        raise ValueError(f"Column has no valid dates: {date_column}")
+
+    return df.loc[dates.idxmax(), value_column]
