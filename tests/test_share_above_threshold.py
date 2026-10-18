@@ -13,3 +13,9 @@ def test_share_above_threshold_empty_column():
     df = pd.DataFrame({"Sales": [None, None]})
 
     assert get_share_above_threshold(df, "Sales", 100) == 0.0
+
+
+def test_share_above_threshold_ignores_missing():
+    df = pd.DataFrame({"Sales": [150, None, 50, None]})
+
+    assert get_share_above_threshold(df, "Sales", 100) == 50.0

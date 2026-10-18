@@ -270,7 +270,7 @@ def get_share_above_threshold(df: pd.DataFrame, column: str, threshold: float) -
     if values.empty:
         return 0.0
 
-    return round(float((values > threshold).sum() / len(df) * 100), 2)
+    return round(float((values > threshold).sum() / len(values) * 100), 2)
 
 
 def get_column_ratios(df: pd.DataFrame, numerator: str, denominator: str) -> list:
