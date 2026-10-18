@@ -303,5 +303,5 @@ def get_ranks(df: pd.DataFrame, column: str) -> list:
     """Return the rank of each value, where 1 is the highest. Ties share the best rank."""
     _validate_numeric_column(df, column)
 
-    ranks = df[column].rank(ascending=True, method="min")
+    ranks = df[column].rank(ascending=False, method="min")
     return [None if pd.isna(rank) else int(rank) for rank in ranks]
