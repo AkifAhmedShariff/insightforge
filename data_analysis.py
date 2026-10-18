@@ -464,7 +464,7 @@ def count_duplicate_rows(df: pd.DataFrame, subset: list = None) -> int:
             if column not in df.columns:
                 raise KeyError(f"Column not found: {column}")
 
-    return int(df.duplicated(subset=subset, keep=False).sum())
+    return int(df.duplicated(subset=subset, keep="first").sum())
 
 
 def get_top_n_rows(df: pd.DataFrame, column: str, n: int = 5) -> pd.DataFrame:

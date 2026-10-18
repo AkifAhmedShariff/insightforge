@@ -21,3 +21,9 @@ def test_count_duplicate_rows_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         count_duplicate_rows(df, ["Region"])
+
+
+def test_count_duplicate_rows_counts_repeats_only():
+    df = pd.DataFrame({"Region": ["North", "North", "South"]})
+
+    assert count_duplicate_rows(df) == 1
