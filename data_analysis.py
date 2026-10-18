@@ -228,6 +228,14 @@ def count_values_above(df: pd.DataFrame, column: str, threshold: float) -> int:
     return int((df[column] > threshold).sum())
 
 
+def get_unique_count(df: pd.DataFrame, column: str) -> int:
+    """Return the number of distinct non-missing values in a column."""
+    if column not in df.columns:
+        raise KeyError(f"Column not found: {column}")
+
+    return int(df[column].nunique(dropna=False))
+
+
 def get_top_n_rows(df: pd.DataFrame, column: str, n: int = 5) -> pd.DataFrame:
     """Return the n rows with the highest values in a numeric column, largest first."""
     _validate_numeric_column(df, column)
