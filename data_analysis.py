@@ -12,6 +12,20 @@ def get_data_quality_summary(df: pd.DataFrame) -> dict:
     }
 
 
+def get_weighted_average(df: pd.DataFrame, value_column: str, weight_column: str) -> float:
+    """Return the average of value_column weighted by weight_column."""
+    _validate_numeric_column(df, value_column)
+    _validate_numeric_column(df, weight_column)
+
+    pairs = df[[value_column, weight_column]].dropna()
+
+    if pairs.empty or pairs[weight_column].sum() == 0:
+        raise ValueError("Weights must have a non-zero total")
+
+    weighted_total = (pairs[value_column] * pairs[weight_column]).sum()
+    return round(float(weighted_total / len(pairs)), 4)
+
+
 def get_moving_average(df: pd.DataFrame, column: str, window: int = 3) -> list:
     """Return the rolling mean of a numeric column over the given window size."""
     _validate_numeric_column(df, column)
