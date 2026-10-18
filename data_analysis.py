@@ -250,6 +250,22 @@ def get_quartiles(df: pd.DataFrame, column: str) -> dict:
     }
 
 
+def get_range_by_category(
+    df: pd.DataFrame,
+    category_column: str,
+    value_column: str,
+) -> dict:
+    """Return the difference between the highest and lowest value for each category."""
+    _validate_numeric_column(df, value_column)
+
+    if category_column not in df.columns:
+        raise KeyError(f"Column not found: {category_column}")
+
+    grouped = df.groupby(category_column)[value_column]
+    ranges = grouped.last() - grouped.first()
+    return {category: round(float(value), 2) for category, value in ranges.items()}
+
+
 def drop_duplicate_rows(df: pd.DataFrame, subset: list = None) -> pd.DataFrame:
     """Return a copy without duplicate rows, keeping the first occurrence of each."""
     if subset:
