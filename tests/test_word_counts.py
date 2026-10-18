@@ -21,3 +21,9 @@ def test_word_counts_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_word_counts(df, "Notes")
+
+
+def test_word_counts_ignores_extra_spaces():
+    df = pd.DataFrame({"Notes": ["big  red", " dog "]})
+
+    assert get_word_counts(df, "Notes") == [2, 1]

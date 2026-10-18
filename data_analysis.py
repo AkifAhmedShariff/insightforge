@@ -610,7 +610,7 @@ def get_word_counts(df: pd.DataFrame, column: str) -> list:
     if column not in df.columns:
         raise KeyError(f"Column not found: {column}")
 
-    return [None if pd.isna(value) else len(str(value).split(" ")) for value in df[column]]
+    return [None if pd.isna(value) else len(str(value).split()) for value in df[column]]
 
 
 def get_longest_streak_above(df: pd.DataFrame, column: str, threshold: float) -> int:
