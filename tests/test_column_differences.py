@@ -21,3 +21,9 @@ def test_column_differences_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_column_differences(df, "Revenue", "Cost")
+
+
+def test_column_differences_negative_result():
+    df = pd.DataFrame({"Revenue": [3], "Cost": [5]})
+
+    assert get_column_differences(df, "Revenue", "Cost") == [-2.0]

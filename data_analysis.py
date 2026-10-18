@@ -661,7 +661,7 @@ def get_column_differences(df: pd.DataFrame, column_a: str, column_b: str) -> li
     _validate_numeric_column(df, column_a)
     _validate_numeric_column(df, column_b)
 
-    differences = (df[column_a] - df[column_b]).abs()
+    differences = df[column_a] - df[column_b]
     return [None if pd.isna(value) else round(float(value), 2) for value in differences]
 
 
