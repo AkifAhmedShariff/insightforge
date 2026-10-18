@@ -1,212 +1,233 @@
-# 🔍 InsightForge
+# InsightForge
 
-### AI Data Detective — Discover what your data is trying to tell you.
+**AI Data Detective --- discover what your data is trying to tell you.**
 
-InsightForge is an AI-powered data analysis application built with Python and Streamlit. It helps users explore datasets, identify trends and anomalies, investigate findings using AI, ask questions in natural language, and generate downloadable reports.
+InsightForge is an AI-assisted data exploration application that helps
+users inspect CSV and Excel datasets, identify potentially meaningful
+patterns, investigate anomalies, and communicate findings through
+natural-language explanations and downloadable reports.
 
-Instead of requiring users to perform every analysis manually, InsightForge combines Python-based calculations with AI-assisted interpretation to make data exploration more accessible.
+**Live application:**
+https://insightforge-3fmzxw6yrzyeesdwuu9tb3.streamlit.app/\
+**Track:** Track 1 → G5: Open Innovation with Gemma 4
+And find a sample dataset above👆
+## Overview
 
-**Live Demo:** [Try InsightForge](NA LINK)
+Many data workflows require users to know what to look for before they
+begin. InsightForge takes a discovery-first approach: it profiles a
+dataset, surfaces patterns worth investigating, and gives users tools to
+explore those findings.
 
----
+The application combines deterministic Python-based data analysis with a
+generative model for explanations. Python computes the underlying
+statistics; the model helps translate selected findings into accessible
+language. AI-generated explanations should be treated as assistance,
+while numeric results should be checked against the source data.
 
-## ✨ Features
+## Core capabilities
 
-### 📊 Dataset Exploration
-- Upload CSV and Excel datasets.
-- Preview data and inspect dataset dimensions.
-- Identify numeric and categorical columns.
-- Review descriptive statistics and column data types.
+-   **Dataset ingestion:** Upload CSV and Excel files for analysis.
+-   **Data profiling:** Review dataset structure, columns, data types,
+    and quality indicators.
+-   **Trend and pattern exploration:** Examine distributions,
+    relationships, correlations, and trends in the available data.
+-   **Anomaly detection:** Surface unusual observations using
+    statistical techniques such as IQR and Z-score where applicable.
+-   **Investigate findings:** Explore selected observations and request
+    an AI-generated explanation.
+-   **Ask Your Data:** Ask natural-language questions about a dataset
+    and receive AI-assisted responses.
+-   **Visual analytics:** Explore findings through interactive charts
+    and dashboard views.
+-   **Reporting:** Generate downloadable PDF reports to communicate
+    results.
 
-### 🧹 Data Quality Analysis
-- Identify missing values.
-- Detect duplicate records.
-- Inspect column types and summary statistics.
-- Understand potential data-quality issues before analysis.
+Feature availability and output quality depend on the dataset,
+configured model access, and the current application build.
 
-### 📈 Automatic Trend Discovery
-- Identify potential date and numeric columns.
-- Explore changes and patterns in the data.
-- Visualize findings with interactive charts.
+## Innovation
 
-### 🚨 Anomaly Detection
-- Use statistical techniques such as the Interquartile Range (IQR) and Z-scores.
-- Highlight potentially unusual observations.
-- Investigate interesting values using relevant dataset evidence.
+InsightForge focuses on integrating several steps into one workflow:
 
-### 💬 Ask Your Data
-Ask questions about an uploaded dataset using natural language rather than writing queries manually.
+1.  Inspect and profile a dataset.
+2.  Surface potential data-quality issues, trends, and anomalies.
+3.  Let the user investigate findings rather than requiring a fully
+    specified question at the start.
+4.  Use a generative model to explain selected results in natural
+    language.
+5.  Consolidate findings into a report.
 
-The analysis workflow combines structured analysis planning, Python-based calculations, and AI-assisted explanations to help users explore data and interpret results.
+The contribution is the integrated, discovery-first workflow---not a
+claim that each individual capability is new. Unlike a
+visualization-only workflow, InsightForge is designed to connect
+statistical exploration with conversational interpretation and
+reporting.
 
-### 🤖 AI Data Detective
-InsightForge uses AI to help explain patterns and suggest further investigations.
+## Track alignment
 
-> **Core principle:** Python calculates the evidence; AI helps explain what it may mean.
+**Track 1 → G5: Open Innovation with Gemma 4**
 
-AI-generated explanations should be interpreted in the context of the underlying data and statistical results.
+InsightForge explores how Gemma 4 can make data analysis more accessible
+by helping users interpret statistical findings through natural-language
+explanations. The application pairs conventional Python data processing
+with model-assisted interpretation, keeping numeric analysis separate
+from generated explanations.
 
-### 📄 PDF Report Generation
-Generate downloadable PDF reports containing supported report sections, charts, and narrative content.
+## Technical architecture
 
-The report-generation workflow is designed to make analytical findings easier to review and share.
-
-### 💾 Data Export
-Export available analysis outputs and datasets for further review or reporting.
-
----
-
-## 🧠 How It Works
-
-1. **Upload** — Load a CSV or Excel dataset.
-2. **Profile** — Inspect dimensions, column types, statistics, and data quality.
-3. **Discover** — Explore trends, distributions, and potential anomalies.
-4. **Investigate** — Ask questions or select interesting findings for deeper analysis.
-5. **Interpret** — Use AI-assisted explanations grounded in computed evidence.
-6. **Report** — Generate and download available reports.
-
----
-
-## 🛠️ Technology Stack
-
-- **Python** — Data processing and analytical logic
-- **Streamlit** — Interactive web application
-- **Pandas** — Data manipulation and analysis
-- **Plotly** — Interactive visualizations
-- **Gemma / Gemini API integration** — AI-assisted interpretation
-- **ReportLab** — PDF report generation
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Python 3
-- Git
-- An API key configured for the AI integration, if using AI-powered features
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/AkifAhmedShariff/insightforge.git
-cd insightforge
+``` text
+CSV / Excel dataset
+        |
+        v
+Streamlit application interface
+        |
+        v
+Python data-processing and analysis layer
+(Pandas, NumPy, statistical checks)
+        |
+        +------------------------------+
+        |                              |
+        v                              v
+Charts and structured results     Selected findings
+(Plotly)                               |
+                                       v
+                              Google GenAI SDK
+                              Gemma 4 / configured model
+                                       |
+                                       v
+                              Natural-language explanation
+        |
+        v
+Dashboard views and PDF reporting
 ```
 
-### 2. Create and activate a virtual environment
+The application uses a Python-driven analysis workflow. It does not
+require LangGraph for the architecture described here; do not describe
+it as a LangGraph agent unless that framework is added to the
+implementation.
+
+## Technology stack
+
+  -----------------------------------------------------------------------
+  Component               Technology              Responsibility
+  ----------------------- ----------------------- -----------------------
+  Application interface   Streamlit               User interface and
+                                                  interactive workflow
+
+  Data processing         Python, Pandas, NumPy   Dataset inspection and
+                                                  statistical analysis
+
+  Visualization           Plotly                  Interactive charts
+
+  Generative AI           Google GenAI SDK        Model requests for
+  integration                                     AI-assisted
+                                                  explanations
+
+  AI model                Gemma 4 / configured    Natural-language
+                          Google model            interpretation
+
+  Excel support           OpenPyXL                Excel file handling
+                                                  where required
+
+  PDF reporting           ReportLab               PDF report generation
+
+  Deployment              Streamlit Community     Hosted application
+                          Cloud                   
+  -----------------------------------------------------------------------
+
+## Getting started
+
+### Requirements
+
+-   Python 3.10 or a version supported by the dependencies in
+    `requirements.txt`
+-   A Google GenAI API key for features that call the configured model
+-   Git
+
+### Install
+
+``` bash
+git clone https://github.com/AkifAhmedShariff/insightforge.git
+cd insightforge
+
+python -m venv .venv
+```
+
+Activate the environment:
 
 **macOS / Linux**
 
-```bash
-python3 -m venv .venv
+``` bash
 source .venv/bin/activate
 ```
 
 **Windows**
 
-```bash
-python -m venv .venv
+``` powershell
 .venv\Scripts\activate
 ```
 
-### 3. Install dependencies
+Install dependencies and launch the application:
 
-```bash
+``` bash
 pip install -r requirements.txt
-```
-
-### 4. Configure environment variables
-
-Create a local `.env` file and configure the API key using the exact environment variable expected by the application.
-
-Never commit `.env` or expose API keys in source code, screenshots, logs, or public commits.
-
-### 5. Run the application
-
-```bash
 streamlit run app.py
 ```
 
-Open the local URL printed in your terminal.
+Open the local URL printed by Streamlit.
 
----
+## Configuration
 
-## 🧪 Validation
+For local development, place secrets in a `.env` file only if the
+application code is configured to load it. Do not commit API keys.
 
-Check Python syntax with:
+For Streamlit Community Cloud, add the required secret in the app's
+**Settings → Secrets** section:
 
-```bash
-python3 -m py_compile app.py
+``` toml
+GEMINI_API_KEY = "your_api_key_here"
 ```
 
-Check Git whitespace errors with:
+Use the key name expected by the current application code. Never publish
+real credentials in source control, README examples, screenshots, or
+issue reports.
 
-```bash
-git diff --check
-```
+## Repository structure
 
-These checks are useful initial validations; they do not replace application runtime tests or end-to-end testing.
+The repository includes the following core files and directories:
 
----
-
-## 📁 Project Structure
-
-```text
+``` text
 insightforge/
-├── app.py                  # Streamlit application
-├── data_analysis.py        # Data-analysis helpers
-├── tests/
-│   └── test_data_analysis.py
-├── requirements.txt        # Python dependencies
-├── sample_sales.csv        # Sample dataset
-├── screenshots/            # Project screenshots
-└── README.md               # Project documentation
+├── app.py
+├── requirements.txt
+├── sample_sales.csv
+├── LICENSE
+├── screenshots/
+└── README.md
 ```
 
-The exact files available may vary by branch.
+The exact file list may evolve as the project develops.
 
----
+## Responsible use and limitations
 
-## 🔐 Security Notes
+-   An anomaly is a signal for investigation, not proof of an error or
+    fraud.
+-   Statistical methods can miss relevant patterns or flag valid
+    observations.
+-   Model-generated explanations can be incomplete or incorrect; verify
+    important claims against the underlying data.
+-   Results depend on input quality, dataset size, available columns,
+    and model configuration.
+-   Do not upload confidential or personally identifiable data unless
+    you are authorized to do so and the deployment is appropriate for
+    that data.
 
-- Keep API keys in local environment configuration.
-- Never commit `.env` files or credentials.
-- Review uploaded data before sharing reports publicly.
-- Verify important AI-generated interpretations against the underlying data.
+## Contributing
 
----
+Contributions, issue reports, and practical suggestions are welcome.
+When reporting a bug, include the steps to reproduce it and a sanitized
+error message. Never include API keys, passwords, or private datasets.
 
-## 🗺️ Roadmap
+## License
 
-- Expand automated data-analysis workflows.
-- Improve natural-language question handling.
-- Enhance report formatting and export options.
-- Add more comprehensive automated and end-to-end tests.
-- Improve usability and documentation based on feedback.
-
----
-
-## 🤝 Contributing
-
-Contributions, suggestions, bug reports, and feature ideas are welcome.
-
-1. Fork the repository.
-2. Create a feature branch.
-3. Make and test your changes.
-4. Commit your changes and push your branch.
-5. Open a pull request describing the changes.
-
----
-
-## 📄 License
-
-See the [`LICENSE`](LICENSE) file for licensing information.
-## Key Features
-
-- **Data Analysis:** Explore datasets and generate useful insights.
-- **Ask Your Data:** Ask questions about your data in natural language.
-- **PDF Reports:** Generate downloadable reports to share your findings.
-- **Interactive Interface:** Analyze data through a user-friendly dashboard.
----
-
-**InsightForge — Turn raw data into meaningful discoveries.**
+See [`LICENSE`](LICENSE) for the terms governing use and distribution.
