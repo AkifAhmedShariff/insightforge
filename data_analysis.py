@@ -518,6 +518,18 @@ def get_days_between(df: pd.DataFrame, start_column: str, end_column: str) -> li
     return [None if pd.isna(value) else int(value) for value in days]
 
 
+def count_rows_starting_with(df: pd.DataFrame, column: str, prefix: str) -> int:
+    """Return how many values in a text column start with prefix, ignoring upper/lower case.
+
+    Missing values never match.
+    """
+    if column not in df.columns:
+        raise KeyError(f"Column not found: {column}")
+
+    values = df[column].dropna().astype(str).str.lower()
+    return int(values.str.contains(prefix.lower(), regex=False).sum())
+
+
 def get_percent_of_max(df: pd.DataFrame, column: str) -> list:
     """Return each value as a percentage of the column maximum, rounded to 2 decimals.
 
