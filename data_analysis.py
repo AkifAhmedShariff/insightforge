@@ -503,6 +503,22 @@ def get_monthly_totals(df: pd.DataFrame, date_column: str, value_column: str) ->
     return {month: float(total) for month, total in totals.items()}
 
 
+def get_best_average_category(df: pd.DataFrame, category_column: str, value_column: str):
+    """Return the category with the highest average value, ignoring missing values."""
+    _validate_numeric_column(df, value_column)
+
+    if category_column not in df.columns:
+        raise KeyError(f"Column not found: {category_column}")
+
+    values = df[[category_column, value_column]].dropna()
+
+    if values.empty:
+        raise ValueError(f"Column has no values: {value_column}")
+
+    averages = values.groupby(category_column)[value_column].mean()
+    return averages.idxmax()
+
+
 def count_values_above(df: pd.DataFrame, column: str, threshold: float) -> int:
     """Return how many values are strictly greater than the threshold."""
     _validate_numeric_column(df, column)
