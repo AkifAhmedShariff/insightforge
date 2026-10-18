@@ -196,6 +196,18 @@ def get_highest_value_row(
     return df.loc[df[column].idxmax()]
 
 
+def get_monthly_counts(df: pd.DataFrame, date_column: str) -> dict:
+    """Return the number of rows per month, keyed by "YYYY-MM". Rows with invalid dates are ignored."""
+    if date_column not in df.columns:
+        raise KeyError(f"Column not found: {date_column}")
+
+    dates = pd.to_datetime(df[date_column], errors="coerce").dropna()
+    keys = dates.dt.year.astype(str) + "-" + dates.dt.month.astype(str)
+    counts = keys.value_counts().sort_index()
+
+    return {key: int(count) for key, count in counts.items()}
+
+
 def filter_by_category(df: pd.DataFrame, column: str, values: list) -> pd.DataFrame:
     """Return rows whose column matches any of the given values (case-insensitive)."""
     if column not in df.columns:
