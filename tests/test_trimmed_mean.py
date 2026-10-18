@@ -21,3 +21,9 @@ def test_trimmed_mean_rejects_large_proportion():
 
     with pytest.raises(ValueError, match="proportion must be"):
         get_trimmed_mean(df, "Sales", proportion=0.5)
+
+
+def test_trimmed_mean_drops_both_ends():
+    df = pd.DataFrame({"Sales": [1, 2, 3, 4, 100]})
+
+    assert get_trimmed_mean(df, "Sales", proportion=0.2) == 3.0

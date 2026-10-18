@@ -671,7 +671,7 @@ def get_trimmed_mean(df: pd.DataFrame, column: str, proportion: float = 0.1) -> 
         raise ValueError(f"Column has no values: {column}")
 
     cut = int(len(values) * proportion)
-    trimmed = values.iloc[: len(values) - cut]
+    trimmed = values.iloc[cut : len(values) - cut]
     return round(float(trimmed.mean()), 2)
 
 
