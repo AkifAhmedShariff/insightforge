@@ -527,7 +527,7 @@ def count_rows_starting_with(df: pd.DataFrame, column: str, prefix: str) -> int:
         raise KeyError(f"Column not found: {column}")
 
     values = df[column].dropna().astype(str).str.lower()
-    return int(values.str.contains(prefix.lower(), regex=False).sum())
+    return int(values.str.startswith(prefix.lower()).sum())
 
 
 def get_percent_of_max(df: pd.DataFrame, column: str) -> list:

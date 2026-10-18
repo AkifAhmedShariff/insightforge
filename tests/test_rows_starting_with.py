@@ -21,3 +21,9 @@ def test_count_rows_starting_with_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         count_rows_starting_with(df, "Name", "k")
+
+
+def test_count_rows_starting_with_ignores_text_in_middle():
+    df = pd.DataFrame({"Item": ["apple pie", "pineapple"]})
+
+    assert count_rows_starting_with(df, "Item", "apple") == 1
