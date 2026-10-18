@@ -433,6 +433,25 @@ def get_mode(df: pd.DataFrame, column: str):
     return counts.index[0]
 
 
+def get_longest_streak_above(df: pd.DataFrame, column: str, threshold: float) -> int:
+    """Return the length of the longest run of consecutive values greater than threshold.
+
+    Missing values end a run.
+    """
+    _validate_numeric_column(df, column)
+
+    longest = 0
+    streak = 0
+    for value in df[column]:
+        if not pd.isna(value) and value > threshold:
+            streak += 1
+        else:
+            longest = max(longest, streak)
+            streak = 0
+
+    return longest
+
+
 def get_growth_rate(df: pd.DataFrame, column: str) -> float:
     """Return the percentage change from the first to the last non-missing value."""
     _validate_numeric_column(df, column)
