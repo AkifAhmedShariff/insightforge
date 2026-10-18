@@ -237,6 +237,23 @@ def drop_duplicate_rows(df: pd.DataFrame, subset: list = None) -> pd.DataFrame:
     return df.drop_duplicates(subset=subset, keep="first").reset_index(drop=True)
 
 
+def get_quarterly_totals(df: pd.DataFrame, date_column: str, value_column: str) -> dict:
+    """Return the total value per quarter, keyed by "YYYY-Qn". Rows with invalid dates are ignored."""
+    _validate_numeric_column(df, value_column)
+
+    if date_column not in df.columns:
+        raise KeyError(f"Column not found: {date_column}")
+
+    dates = pd.to_datetime(df[date_column], errors="coerce")
+    valid = dates.notna()
+    dates = dates[valid]
+    quarter_numbers = dates.dt.month // 3 + 1
+    keys = dates.dt.year.astype(str) + "-Q" + quarter_numbers.astype(str)
+    totals = df.loc[valid, value_column].groupby(keys).sum()
+
+    return {key: round(float(total), 2) for key, total in totals.items()}
+
+
 def get_outliers(
     df: pd.DataFrame,
     column: str,
