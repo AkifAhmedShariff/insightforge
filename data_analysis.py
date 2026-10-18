@@ -233,6 +233,21 @@ def filter_by_category(df: pd.DataFrame, column: str, values: list) -> pd.DataFr
     return df[df[column].astype(str).str.lower().isin(wanted)]
 
 
+def get_expanding_average(df: pd.DataFrame, column: str) -> list:
+    """Return the average of all values up to each row, rounded to 2 decimals.
+
+    Missing values are skipped and returned as None.
+    """
+    _validate_numeric_column(df, column)
+    values = df[column]
+    running = values.expanding().mean()
+
+    return [
+        None if pd.isna(value) else round(float(average), 2)
+        for value, average in zip(values, running)
+    ]
+
+
 def get_rows_above_mean(df: pd.DataFrame, column: str) -> pd.DataFrame:
     """Return the rows whose value is strictly greater than the column mean."""
     _validate_numeric_column(df, column)
