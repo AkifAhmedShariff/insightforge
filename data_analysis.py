@@ -130,6 +130,16 @@ def get_percentage_of_total(df: pd.DataFrame, column: str) -> list:
     return [None if pd.isna(value) else round(float(value), 2) for value in shares]
 
 
+def drop_duplicate_rows(df: pd.DataFrame, subset: list = None) -> pd.DataFrame:
+    """Return a copy without duplicate rows, keeping the first occurrence of each."""
+    if subset:
+        missing = [column for column in subset if column not in df.columns]
+        if missing:
+            raise KeyError(f"Column not found: {missing[0]}")
+
+    return df.drop_duplicates(subset=subset, keep="last").reset_index(drop=True)
+
+
 def get_outliers(
     df: pd.DataFrame,
     column: str,
