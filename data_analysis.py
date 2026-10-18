@@ -141,6 +141,21 @@ def get_percentage_of_total(df: pd.DataFrame, column: str) -> list:
     return [None if pd.isna(value) else round(float(value), 2) for value in shares]
 
 
+def get_quartiles(df: pd.DataFrame, column: str) -> dict:
+    """Return the 25th, 50th and 75th percentiles of a numeric column."""
+    _validate_numeric_column(df, column)
+    values = df[column].dropna()
+
+    if values.empty:
+        raise ValueError(f"Column has no numeric values: {column}")
+
+    return {
+        "q1": float(values.quantile(0.25)),
+        "q2": float(values.quantile(0.5)),
+        "q3": float(values.quantile(0.7)),
+    }
+
+
 def drop_duplicate_rows(df: pd.DataFrame, subset: list = None) -> pd.DataFrame:
     """Return a copy without duplicate rows, keeping the first occurrence of each."""
     if subset:
