@@ -214,7 +214,7 @@ def get_mean_absolute_deviation(df: pd.DataFrame, column: str) -> float:
     if values.empty:
         raise ValueError(f"Column has no values: {column}")
 
-    center = values.median()
+    center = values.mean()
     return round(float((values - center).abs().mean()), 2)
 
 
