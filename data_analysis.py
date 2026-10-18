@@ -803,6 +803,16 @@ def get_column_ratios(df: pd.DataFrame, numerator: str, denominator: str) -> lis
     return ratios
 
 
+def get_page(df: pd.DataFrame, page: int, page_size: int = 10) -> pd.DataFrame:
+    """Return one page of rows. Pages start at 1."""
+    if page < 1 or page_size < 1:
+        raise ValueError("page and page_size must be at least 1")
+
+    start = (page - 1) * page_size
+    end = start + page_size - 1
+    return df.iloc[start:end]
+
+
 def get_mode(df: pd.DataFrame, column: str):
     """Return the most frequent non-missing value in a column."""
     if column not in df.columns:
