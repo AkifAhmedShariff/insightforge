@@ -75,6 +75,14 @@ def get_numeric_statistics(
     }
 
 
+def get_cumulative_sum(df: pd.DataFrame, column: str) -> list:
+    """Return the running total of a numeric column. Missing values are treated as 0."""
+    _validate_numeric_column(df, column)
+
+    running = df[column].fillna(0).cumsum()
+    return [round(float(value), 2) for value in running]
+
+
 def get_median_by_category(
     df: pd.DataFrame,
     category_column: str,
