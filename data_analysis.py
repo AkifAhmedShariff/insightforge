@@ -851,6 +851,16 @@ def fill_missing_with_median(df: pd.DataFrame, column: str) -> pd.DataFrame:
     return result
 
 
+def get_duplicate_values(df: pd.DataFrame, column: str) -> list:
+    """Return the values that appear more than once in a column, sorted, ignoring missing values."""
+    if column not in df.columns:
+        raise KeyError(f"Column not found: {column}")
+
+    values = df[column].dropna()
+    duplicates = values[values.duplicated()]
+    return sorted(duplicates.unique().tolist())
+
+
 def get_second_highest_value(df: pd.DataFrame, column: str) -> float:
     """Return the second highest distinct value in a numeric column, ignoring missing values."""
     _validate_numeric_column(df, column)
