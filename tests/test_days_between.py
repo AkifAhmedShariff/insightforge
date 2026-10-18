@@ -15,3 +15,9 @@ def test_days_between_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_days_between(df, "Ordered", "Shipped")
+
+
+def test_days_between_is_end_minus_start():
+    df = pd.DataFrame({"Ordered": ["2024-03-01"], "Shipped": ["2024-03-05"]})
+
+    assert get_days_between(df, "Ordered", "Shipped") == [4]

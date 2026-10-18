@@ -215,7 +215,7 @@ def get_days_between(df: pd.DataFrame, start_column: str, end_column: str) -> li
 
     start = pd.to_datetime(df[start_column], errors="coerce")
     end = pd.to_datetime(df[end_column], errors="coerce")
-    days = (start - end).dt.days
+    days = (end - start).dt.days
 
     return [None if pd.isna(value) else int(value) for value in days]
 
