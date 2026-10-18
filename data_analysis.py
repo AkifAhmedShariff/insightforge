@@ -23,7 +23,7 @@ def get_weighted_average(df: pd.DataFrame, value_column: str, weight_column: str
         raise ValueError("Weights must have a non-zero total")
 
     weighted_total = (pairs[value_column] * pairs[weight_column]).sum()
-    return round(float(weighted_total / len(pairs)), 4)
+    return round(float(weighted_total / pairs[weight_column].sum()), 4)
 
 
 def get_moving_average(df: pd.DataFrame, column: str, window: int = 3) -> list:

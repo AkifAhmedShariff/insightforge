@@ -15,3 +15,9 @@ def test_weighted_average_rejects_zero_weights():
 
     with pytest.raises(ValueError, match="non-zero total"):
         get_weighted_average(df, "Price", "Units")
+
+
+def test_weighted_average_uses_weight_total():
+    df = pd.DataFrame({"Price": [10, 20], "Units": [1, 3]})
+
+    assert get_weighted_average(df, "Price", "Units") == 17.5
