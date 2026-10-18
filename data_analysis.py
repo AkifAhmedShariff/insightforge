@@ -267,7 +267,7 @@ def get_geometric_mean(df: pd.DataFrame, column: str) -> float:
     if values.empty:
         raise ValueError(f"Column has no values: {column}")
 
-    if (values < 0).any():
+    if (values <= 0).any():
         raise ValueError(f"Column values must be greater than 0: {column}")
 
     return round(float(values.prod() ** (1 / len(values))), 2)

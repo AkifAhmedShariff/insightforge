@@ -29,3 +29,10 @@ def test_geometric_mean_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_geometric_mean(df, "Sales")
+
+
+def test_geometric_mean_zero_value():
+    df = pd.DataFrame({"Growth": [0, 4]})
+
+    with pytest.raises(ValueError, match="greater than 0"):
+        get_geometric_mean(df, "Growth")
