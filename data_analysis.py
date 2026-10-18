@@ -132,6 +132,20 @@ def get_value_range(df: pd.DataFrame, column: str) -> float:
     return float(values.max() - values.min())
 
 
+def get_first_value(df: pd.DataFrame, column: str):
+    """Return the first non-missing value in a column."""
+    if column not in df.columns:
+        raise KeyError(f"Column not found: {column}")
+
+    values = df[column].dropna()
+
+    if values.empty:
+        raise ValueError(f"Column has no values: {column}")
+
+    first = values.iloc[0]
+    return first.item() if hasattr(first, "item") else first
+
+
 def get_period_changes(df: pd.DataFrame, column: str) -> list:
     """Return the percentage change from each row to the next. The first row is None."""
     _validate_numeric_column(df, column)
