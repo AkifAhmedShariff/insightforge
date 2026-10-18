@@ -658,6 +658,23 @@ def get_ranks(df: pd.DataFrame, column: str) -> list:
     return [None if pd.isna(rank) else int(rank) for rank in ranks]
 
 
+def get_trimmed_mean(df: pd.DataFrame, column: str, proportion: float = 0.1) -> float:
+    """Return the mean after dropping the given proportion of values from each end, rounded to 2 decimals."""
+    _validate_numeric_column(df, column)
+
+    if not 0 <= proportion < 0.5:
+        raise ValueError("proportion must be at least 0 and less than 0.5")
+
+    values = df[column].dropna().sort_values()
+
+    if values.empty:
+        raise ValueError(f"Column has no values: {column}")
+
+    cut = int(len(values) * proportion)
+    trimmed = values.iloc[cut : len(values) - cut]
+    return round(float(trimmed.mean()), 2)
+
+
 def get_top_categories(
     df: pd.DataFrame,
     category_column: str,
