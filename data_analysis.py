@@ -542,7 +542,7 @@ def get_second_highest_value(df: pd.DataFrame, column: str) -> float:
     if values.nunique() < 2:
         raise ValueError(f"Column needs at least two distinct values: {column}")
 
-    return float(values.nlargest(2).iloc[-1])
+    return float(values.drop_duplicates().nlargest(2).iloc[-1])
 
 
 def get_ranks(df: pd.DataFrame, column: str) -> list:
