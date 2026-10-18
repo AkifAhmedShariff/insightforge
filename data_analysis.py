@@ -87,6 +87,14 @@ def get_value_range(df: pd.DataFrame, column: str) -> float:
     return float(values.max() - values.min())
 
 
+def get_period_changes(df: pd.DataFrame, column: str) -> list:
+    """Return the percentage change from each row to the next. The first row is None."""
+    _validate_numeric_column(df, column)
+
+    changes = df[column].pct_change(fill_method=None) * 100
+    return [None if pd.isna(value) else round(float(value), 2) for value in changes]
+
+
 def get_correlation(df: pd.DataFrame, column_a: str, column_b: str) -> float:
     """Return the Pearson correlation between two numeric columns."""
     _validate_numeric_column(df, column_a)
