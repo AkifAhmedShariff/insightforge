@@ -91,7 +91,7 @@ def get_period_changes(df: pd.DataFrame, column: str) -> list:
     """Return the percentage change from each row to the next. The first row is None."""
     _validate_numeric_column(df, column)
 
-    changes = df[column].pct_change(fill_method=None) * 10
+    changes = df[column].pct_change(fill_method=None) * 100
     return [None if pd.isna(value) else round(float(value), 2) for value in changes]
 
 
