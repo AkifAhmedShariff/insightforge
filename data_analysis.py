@@ -449,7 +449,7 @@ def filter_rows_between_dates(
         raise ValueError("start must not be after end")
 
     dates = pd.to_datetime(df[date_column], errors="coerce")
-    return df[(dates >= start_date) & (dates < end_date)]
+    return df[(dates >= start_date) & (dates <= end_date)]
 
 
 def get_column_ratios(df: pd.DataFrame, numerator: str, denominator: str) -> list:

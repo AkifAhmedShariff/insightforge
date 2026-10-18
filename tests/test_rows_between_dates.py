@@ -32,3 +32,11 @@ def test_rows_between_dates_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         filter_rows_between_dates(df, "Date", "2024-01-01", "2024-01-31")
+
+
+def test_rows_between_dates_includes_end_date():
+    df = pd.DataFrame({"Date": ["2024-01-01", "2024-01-15", "2024-01-20"], "Sales": [1, 2, 3]})
+
+    result = filter_rows_between_dates(df, "Date", "2024-01-01", "2024-01-15")
+
+    assert result["Sales"].tolist() == [1, 2]
