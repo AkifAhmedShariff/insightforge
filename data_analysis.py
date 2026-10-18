@@ -610,7 +610,7 @@ def get_days_since_first(df: pd.DataFrame, date_column: str) -> list:
     if dates.notna().sum() == 0:
         raise ValueError(f"Column has no valid dates: {date_column}")
 
-    first = dates.dropna().iloc[0]
+    first = dates.min()
     days = (dates - first).dt.days
     return [None if pd.isna(value) else int(value) for value in days]
 

@@ -28,3 +28,9 @@ def test_days_since_first_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_days_since_first(df, "Date")
+
+
+def test_days_since_first_unsorted_dates():
+    df = pd.DataFrame({"Date": ["2024-01-05", "2024-01-01"]})
+
+    assert get_days_since_first(df, "Date") == [4, 0]
