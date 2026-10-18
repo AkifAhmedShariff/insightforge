@@ -625,6 +625,24 @@ def get_growth_rate(df: pd.DataFrame, column: str) -> float:
     return round(float((last - first) / first * 100), 2)
 
 
+def get_days_since_first(df: pd.DataFrame, date_column: str) -> list:
+    """Return the number of days between each date and the earliest valid date.
+
+    Invalid dates are returned as None.
+    """
+    if date_column not in df.columns:
+        raise KeyError(f"Column not found: {date_column}")
+
+    dates = pd.to_datetime(df[date_column], errors="coerce")
+
+    if dates.notna().sum() == 0:
+        raise ValueError(f"Column has no valid dates: {date_column}")
+
+    first = dates.min()
+    days = (dates - first).dt.days
+    return [None if pd.isna(value) else int(value) for value in days]
+
+
 def get_rows_in_range(
     df: pd.DataFrame,
     column: str,
