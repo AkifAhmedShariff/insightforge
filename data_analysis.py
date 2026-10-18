@@ -454,6 +454,19 @@ def get_unique_count(df: pd.DataFrame, column: str) -> int:
     return int(df[column].nunique())
 
 
+def count_duplicate_rows(df: pd.DataFrame, subset: list = None) -> int:
+    """Return the number of rows that repeat an earlier row.
+
+    When subset is given, only those columns are compared.
+    """
+    if subset is not None:
+        for column in subset:
+            if column not in df.columns:
+                raise KeyError(f"Column not found: {column}")
+
+    return int(df.duplicated(subset=subset, keep=False).sum())
+
+
 def get_top_n_rows(df: pd.DataFrame, column: str, n: int = 5) -> pd.DataFrame:
     """Return the n rows with the highest values in a numeric column, largest first."""
     _validate_numeric_column(df, column)
