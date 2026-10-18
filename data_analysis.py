@@ -380,6 +380,23 @@ def get_quartiles(df: pd.DataFrame, column: str) -> dict:
     }
 
 
+def count_above_by_category(
+    df: pd.DataFrame, category_column: str, value_column: str, threshold: float
+) -> dict:
+    """Return how many values in each category are greater than threshold.
+
+    Categories with no such values are included with 0.
+    """
+    _validate_numeric_column(df, value_column)
+
+    if category_column not in df.columns:
+        raise KeyError(f"Column not found: {category_column}")
+
+    above = df[value_column] > threshold
+    counts = above.groupby(df[category_column]).sum()
+    return {category: int(count) for category, count in counts.items()}
+
+
 def get_range_by_category(
     df: pd.DataFrame,
     category_column: str,
