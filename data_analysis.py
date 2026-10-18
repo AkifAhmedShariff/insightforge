@@ -179,7 +179,7 @@ def get_date_range(df: pd.DataFrame, date_column: str) -> dict:
 
     return {
         "start": dates.min().strftime("%Y-%m-%d"),
-        "end": dates.min().strftime("%Y-%m-%d"),
+        "end": dates.max().strftime("%Y-%m-%d"),
     }
 
 
