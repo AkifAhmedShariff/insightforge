@@ -21,3 +21,9 @@ def test_monthly_counts_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_monthly_counts(df, "Date")
+
+
+def test_monthly_counts_single_digit_months():
+    df = pd.DataFrame({"Date": ["2024-01-05", "2024-02-01"]})
+
+    assert get_monthly_counts(df, "Date") == {"2024-01": 1, "2024-02": 1}

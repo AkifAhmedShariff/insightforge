@@ -202,7 +202,7 @@ def get_monthly_counts(df: pd.DataFrame, date_column: str) -> dict:
         raise KeyError(f"Column not found: {date_column}")
 
     dates = pd.to_datetime(df[date_column], errors="coerce").dropna()
-    keys = dates.dt.year.astype(str) + "-" + dates.dt.month.astype(str)
+    keys = dates.dt.strftime("%Y-%m")
     counts = keys.value_counts().sort_index()
 
     return {key: int(count) for key, count in counts.items()}
