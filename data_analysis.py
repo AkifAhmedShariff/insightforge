@@ -650,7 +650,7 @@ def get_years_since(df: pd.DataFrame, date_column: str, as_of) -> list:
     dates = pd.to_datetime(df[date_column], errors="coerce")
 
     return [
-        None if pd.isna(date) else int((as_of - date).days // 365)
+        None if pd.isna(date) else as_of.year - date.year - ((as_of.month, as_of.day) < (date.month, date.day))
         for date in dates
     ]
 

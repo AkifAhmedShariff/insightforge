@@ -21,3 +21,9 @@ def test_years_since_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_years_since(df, "Date", "2024-01-01")
+
+
+def test_years_since_day_before_anniversary():
+    df = pd.DataFrame({"Joined": ["2000-01-02"]})
+
+    assert get_years_since(df, "Joined", "2024-01-01") == [23]
