@@ -118,7 +118,8 @@ def filter_by_category(df: pd.DataFrame, column: str, values: list) -> pd.DataFr
     if column not in df.columns:
         raise KeyError(f"Column not found: {column}")
 
-    return df[df[column].isin(values)]
+    wanted = {str(value).lower() for value in values}
+    return df[df[column].astype(str).str.lower().isin(wanted)]
 
 
 def get_percentile(df: pd.DataFrame, column: str, percentile: float) -> float:
