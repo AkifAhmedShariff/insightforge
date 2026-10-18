@@ -23,3 +23,14 @@ def test_drop_duplicate_rows_unknown_subset_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         drop_duplicate_rows(df, subset=["Region"])
+
+
+def test_drop_duplicate_rows_keeps_first_occurrence_in_subset():
+    df = pd.DataFrame({
+        "Product": ["A", "A"],
+        "Sales": [100, 999],
+    })
+
+    result = drop_duplicate_rows(df, subset=["Product"])
+
+    assert result.to_dict("records") == [{"Product": "A", "Sales": 100}]

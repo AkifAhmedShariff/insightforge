@@ -137,7 +137,7 @@ def drop_duplicate_rows(df: pd.DataFrame, subset: list = None) -> pd.DataFrame:
         if missing:
             raise KeyError(f"Column not found: {missing[0]}")
 
-    return df.drop_duplicates(subset=subset, keep="last").reset_index(drop=True)
+    return df.drop_duplicates(subset=subset, keep="first").reset_index(drop=True)
 
 
 def get_outliers(
