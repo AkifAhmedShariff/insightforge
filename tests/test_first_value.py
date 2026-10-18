@@ -28,3 +28,9 @@ def test_first_value_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_first_value(df, "Profit")
+
+
+def test_first_value_skips_leading_missing_value():
+    df = pd.DataFrame({"Sales": [None, 4, 6]})
+
+    assert get_first_value(df, "Sales") == 4

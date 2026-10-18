@@ -142,7 +142,7 @@ def get_first_value(df: pd.DataFrame, column: str):
     if values.empty:
         raise ValueError(f"Column has no values: {column}")
 
-    first = df[column].iloc[0]
+    first = values.iloc[0]
     return first.item() if hasattr(first, "item") else first
 
 
