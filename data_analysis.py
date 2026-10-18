@@ -449,7 +449,7 @@ def get_longest_streak_above(df: pd.DataFrame, column: str, threshold: float) ->
             longest = max(longest, streak)
             streak = 0
 
-    return longest
+    return max(longest, streak)
 
 
 def get_growth_rate(df: pd.DataFrame, column: str) -> float:
