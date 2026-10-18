@@ -574,6 +574,17 @@ def fill_missing_with_median(df: pd.DataFrame, column: str) -> pd.DataFrame:
     return result
 
 
+def get_second_highest_value(df: pd.DataFrame, column: str) -> float:
+    """Return the second highest distinct value in a numeric column, ignoring missing values."""
+    _validate_numeric_column(df, column)
+    values = df[column].dropna()
+
+    if values.nunique() < 2:
+        raise ValueError(f"Column needs at least two distinct values: {column}")
+
+    return float(values.drop_duplicates().nlargest(2).iloc[-1])
+
+
 def get_ranks(df: pd.DataFrame, column: str) -> list:
     """Return the rank of each value, where 1 is the highest. Ties share the best rank."""
     _validate_numeric_column(df, column)
