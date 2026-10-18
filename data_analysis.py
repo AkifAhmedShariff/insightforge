@@ -207,6 +207,19 @@ def get_category_totals(
     ]
 
 
+def get_days_between(df: pd.DataFrame, start_column: str, end_column: str) -> list:
+    """Return the number of days from the start date to the end date for each row."""
+    for column in (start_column, end_column):
+        if column not in df.columns:
+            raise KeyError(f"Column not found: {column}")
+
+    start = pd.to_datetime(df[start_column], errors="coerce")
+    end = pd.to_datetime(df[end_column], errors="coerce")
+    days = (end - start).dt.days
+
+    return [None if pd.isna(value) else int(value) for value in days]
+
+
 def get_monthly_totals(df: pd.DataFrame, date_column: str, value_column: str) -> dict:
     """Return the total value per month, keyed by "YYYY-MM"."""
     _validate_numeric_column(df, value_column)
