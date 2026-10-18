@@ -173,7 +173,7 @@ def get_rows_above_mean(df: pd.DataFrame, column: str) -> pd.DataFrame:
     _validate_numeric_column(df, column)
 
     column_mean = df[column].mean()
-    return df[df[column] >= column_mean]
+    return df[df[column] > column_mean]
 
 
 def get_percentile(df: pd.DataFrame, column: str, percentile: float) -> float:

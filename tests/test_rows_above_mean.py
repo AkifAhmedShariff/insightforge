@@ -21,3 +21,9 @@ def test_rows_above_mean_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_rows_above_mean(df, "Profit")
+
+
+def test_rows_above_mean_excludes_value_equal_to_mean():
+    df = pd.DataFrame({"Sales": [1, 2, 3]})
+
+    assert get_rows_above_mean(df, "Sales")["Sales"].tolist() == [3]
