@@ -858,7 +858,7 @@ def get_duplicate_values(df: pd.DataFrame, column: str) -> list:
 
     values = df[column].dropna()
     duplicates = values[values.duplicated()]
-    return sorted(duplicates.tolist())
+    return sorted(duplicates.unique().tolist())
 
 
 def get_second_highest_value(df: pd.DataFrame, column: str) -> float:

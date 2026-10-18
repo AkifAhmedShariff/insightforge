@@ -21,3 +21,9 @@ def test_duplicate_values_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_duplicate_values(df, "Id")
+
+
+def test_duplicate_values_listed_once():
+    df = pd.DataFrame({"Code": ["a", "a", "a", "b"]})
+
+    assert get_duplicate_values(df, "Code") == ["a"]
