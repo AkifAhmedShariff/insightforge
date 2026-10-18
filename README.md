@@ -8,7 +8,7 @@ patterns, investigate anomalies, and communicate findings through
 natural-language explanations and downloadable reports.
 
 **Live application:**
-https://insightforge-n9kaj2fkhfqzb78xeptfdz.streamlit.app\
+https://insightforge-n9kaj2fkhfqzb78xeptfdz.streamlit.app
 **Track:** Track 1 → G5: Open Innovation with Gemma 4
 And find a sample dataset above👆
 ## Overview
