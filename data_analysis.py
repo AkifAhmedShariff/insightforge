@@ -76,6 +76,17 @@ def get_median_by_category(
     return {category: round(float(value), 2) for category, value in medians.items()}
 
 
+def get_value_range(df: pd.DataFrame, column: str) -> float:
+    """Return the spread of a numeric column: max minus min."""
+    _validate_numeric_column(df, column)
+    values = df[column].dropna()
+
+    if values.empty:
+        raise ValueError(f"Column has no numeric values: {column}")
+
+    return float(values.max() - values.min())
+
+
 def get_correlation(df: pd.DataFrame, column_a: str, column_b: str) -> float:
     """Return the Pearson correlation between two numeric columns."""
     _validate_numeric_column(df, column_a)
