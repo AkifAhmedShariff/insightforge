@@ -113,6 +113,14 @@ def get_highest_value_row(
     return df.loc[df[column].idxmax()]
 
 
+def filter_by_category(df: pd.DataFrame, column: str, values: list) -> pd.DataFrame:
+    """Return rows whose column matches any of the given values (case-insensitive)."""
+    if column not in df.columns:
+        raise KeyError(f"Column not found: {column}")
+
+    return df[df[column].isin(values)]
+
+
 def get_percentile(df: pd.DataFrame, column: str, percentile: float) -> float:
     """Return the given percentile (0 to 100, inclusive) of a numeric column."""
     _validate_numeric_column(df, column)
