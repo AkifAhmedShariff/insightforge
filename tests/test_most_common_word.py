@@ -22,3 +22,9 @@ def test_most_common_word_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_most_common_word(df, "Text")
+
+
+def test_most_common_word_ignores_case():
+    df = pd.DataFrame({"Notes": ["Red apple", "red car", "RED box", "apple"]})
+
+    assert get_most_common_word(df, "Notes") == "red"

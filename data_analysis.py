@@ -513,7 +513,7 @@ def get_most_common_word(df: pd.DataFrame, column: str) -> str:
     if column not in df.columns:
         raise KeyError(f"Column not found: {column}")
 
-    words = [word for value in df[column].dropna() for word in str(value).split()]
+    words = [word for value in df[column].dropna() for word in str(value).lower().split()]
 
     if not words:
         raise ValueError(f"Column has no words: {column}")
