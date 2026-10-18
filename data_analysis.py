@@ -147,6 +147,27 @@ def get_value_range(df: pd.DataFrame, column: str) -> float:
     return float(values.max() - values.min())
 
 
+def get_daily_average(df: pd.DataFrame, date_column: str, value_column: str) -> float:
+    """Return the average total value per day, rounded to 2 decimals.
+
+    Rows with invalid dates are ignored.
+    """
+    _validate_numeric_column(df, value_column)
+
+    if date_column not in df.columns:
+        raise KeyError(f"Column not found: {date_column}")
+
+    dates = pd.to_datetime(df[date_column], errors="coerce")
+    valid = dates.notna()
+
+    if not valid.any():
+        raise ValueError(f"Column has no valid dates: {date_column}")
+
+    total = df.loc[valid, value_column].sum()
+    days = valid.sum()
+    return round(float(total / days), 2)
+
+
 def get_first_value(df: pd.DataFrame, column: str):
     """Return the first non-missing value in a column."""
     if column not in df.columns:
