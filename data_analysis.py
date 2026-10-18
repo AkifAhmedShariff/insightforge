@@ -206,6 +206,18 @@ def get_percentile(df: pd.DataFrame, column: str, percentile: float) -> float:
     return float(values.quantile(percentile / 100))
 
 
+def get_mean_absolute_deviation(df: pd.DataFrame, column: str) -> float:
+    """Return the average distance of each value from the column mean, rounded to 2 decimals."""
+    _validate_numeric_column(df, column)
+    values = df[column].dropna()
+
+    if values.empty:
+        raise ValueError(f"Column has no values: {column}")
+
+    center = values.median()
+    return round(float((values - center).abs().mean()), 2)
+
+
 def get_date_range(df: pd.DataFrame, date_column: str) -> dict:
     """Return the earliest and latest valid dates in a column as "YYYY-MM-DD" strings."""
     if date_column not in df.columns:
