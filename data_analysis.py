@@ -172,7 +172,7 @@ def get_outliers(
 
 def count_missing_by_row(df: pd.DataFrame) -> list:
     """Return the number of missing values in each row."""
-    return [int(count) for count in df.isnull().sum(axis=0)]
+    return [int(count) for count in df.isnull().sum(axis=1)]
 
 
 def get_z_scores(df: pd.DataFrame, column: str) -> list:
