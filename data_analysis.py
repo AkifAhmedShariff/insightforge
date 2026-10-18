@@ -194,7 +194,7 @@ def get_monthly_totals(df: pd.DataFrame, date_column: str, value_column: str) ->
         raise KeyError(f"Column not found: {date_column}")
 
     dates = pd.to_datetime(df[date_column], errors="coerce")
-    months = dates.dt.strftime("%Y-%d")
+    months = dates.dt.strftime("%Y-%m")
     totals = df[value_column].groupby(months).sum()
 
     return {month: float(total) for month, total in totals.items()}

@@ -21,3 +21,12 @@ def test_monthly_totals_missing_date_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_monthly_totals(df, "Date", "Sales")
+
+
+def test_monthly_totals_groups_by_month_not_day():
+    df = pd.DataFrame({
+        "Date": ["2024-01-15", "2024-01-20"],
+        "Sales": [100, 50],
+    })
+
+    assert get_monthly_totals(df, "Date", "Sales") == {"2024-01": 150.0}
