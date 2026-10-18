@@ -154,6 +154,22 @@ def get_period_changes(df: pd.DataFrame, column: str) -> list:
     return [None if pd.isna(value) else round(float(value), 2) for value in changes]
 
 
+def get_recent_average(df: pd.DataFrame, column: str, n: int = 3) -> float:
+    """Return the average of the last n non-missing values, rounded to 2 decimals."""
+    _validate_numeric_column(df, column)
+
+    if n < 1:
+        raise ValueError("n must be at least 1")
+
+    values = df[column].dropna()
+
+    if values.empty:
+        raise ValueError(f"Column has no values: {column}")
+
+    recent = values.tail(n)
+    return round(float(recent.mean()), 2)
+
+
 def get_cumulative_percentage(df: pd.DataFrame, column: str) -> list:
     """Return the running total of a column as a percentage of the grand total, rounded to 2 decimals.
 
