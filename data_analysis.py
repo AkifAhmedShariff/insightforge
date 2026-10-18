@@ -834,6 +834,18 @@ def get_longest_streak_above(df: pd.DataFrame, column: str, threshold: float) ->
     return max(longest, streak)
 
 
+def sort_by_column(df: pd.DataFrame, column: str, descending: bool = True) -> pd.DataFrame:
+    """Return rows sorted by a column. Missing values always go last."""
+    if column not in df.columns:
+        raise KeyError(f"Column not found: {column}")
+
+    return df.sort_values(
+        column,
+        ascending=not descending,
+        na_position="first",
+    ).reset_index(drop=True)
+
+
 def get_growth_rate(df: pd.DataFrame, column: str) -> float:
     """Return the percentage change from the first to the last non-missing value."""
     _validate_numeric_column(df, column)
