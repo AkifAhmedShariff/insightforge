@@ -21,3 +21,9 @@ def test_count_above_by_category_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         count_above_by_category(df, "Region", "Sales", 0)
+
+
+def test_count_above_by_category_includes_zero():
+    df = pd.DataFrame({"Region": ["North", "South"], "Sales": [20, 5]})
+
+    assert count_above_by_category(df, "Region", "Sales", 10) == {"North": 1, "South": 0}

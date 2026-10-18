@@ -372,7 +372,7 @@ def count_above_by_category(
         raise KeyError(f"Column not found: {category_column}")
 
     above = df[value_column] > threshold
-    counts = df[above].groupby(category_column).size()
+    counts = above.groupby(df[category_column]).sum()
     return {category: int(count) for category, count in counts.items()}
 
 
