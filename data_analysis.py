@@ -167,6 +167,22 @@ def get_percentile(df: pd.DataFrame, column: str, percentile: float) -> float:
     return float(values.quantile(percentile / 100))
 
 
+def get_date_range(df: pd.DataFrame, date_column: str) -> dict:
+    """Return the earliest and latest valid dates in a column as "YYYY-MM-DD" strings."""
+    if date_column not in df.columns:
+        raise KeyError(f"Column not found: {date_column}")
+
+    dates = pd.to_datetime(df[date_column], errors="coerce").dropna()
+
+    if dates.empty:
+        raise ValueError(f"Column has no valid dates: {date_column}")
+
+    return {
+        "start": dates.min().strftime("%Y-%m-%d"),
+        "end": dates.max().strftime("%Y-%m-%d"),
+    }
+
+
 def get_percentage_of_total(df: pd.DataFrame, column: str) -> list:
     """Return each value as a percentage of the column total."""
     _validate_numeric_column(df, column)
