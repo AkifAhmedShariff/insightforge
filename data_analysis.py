@@ -84,7 +84,7 @@ def get_value_range(df: pd.DataFrame, column: str) -> float:
     if values.empty:
         raise ValueError(f"Column has no numeric values: {column}")
 
-    return float(abs(values.max()) - abs(values.min()))
+    return float(values.max() - values.min())
 
 
 def get_correlation(df: pd.DataFrame, column_a: str, column_b: str) -> float:

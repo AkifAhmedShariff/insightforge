@@ -15,3 +15,9 @@ def test_value_range_rejects_empty_column():
 
     with pytest.raises(ValueError, match="no numeric values"):
         get_value_range(df, "Sales")
+
+
+def test_value_range_with_negative_values():
+    df = pd.DataFrame({"Profit": [-10, 5, 20]})
+
+    assert get_value_range(df, "Profit") == 30.0
