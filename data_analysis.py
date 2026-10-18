@@ -326,7 +326,7 @@ def filter_rows_containing(df: pd.DataFrame, column: str, text: str) -> pd.DataF
     if column not in df.columns:
         raise KeyError(f"Column not found: {column}")
 
-    matches = df[column].astype("string").str.contains(text, case=False, na=False)
+    matches = df[column].astype("string").str.contains(text, case=False, na=False, regex=False)
     return df[matches]
 
 

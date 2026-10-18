@@ -25,3 +25,11 @@ def test_filter_rows_containing_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         filter_rows_containing(df, "Region", "Pen")
+
+
+def test_filter_rows_containing_matches_text_literally():
+    df = pd.DataFrame({"Product": ["Model A.1", "Model AX1"]})
+
+    result = filter_rows_containing(df, "Product", "A.1")
+
+    assert result["Product"].tolist() == ["Model A.1"]
