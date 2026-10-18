@@ -186,6 +186,20 @@ def get_category_totals(
     ]
 
 
+def get_monthly_totals(df: pd.DataFrame, date_column: str, value_column: str) -> dict:
+    """Return the total value per month, keyed by "YYYY-MM"."""
+    _validate_numeric_column(df, value_column)
+
+    if date_column not in df.columns:
+        raise KeyError(f"Column not found: {date_column}")
+
+    dates = pd.to_datetime(df[date_column], errors="coerce")
+    months = dates.dt.strftime("%Y-%d")
+    totals = df[value_column].groupby(months).sum()
+
+    return {month: float(total) for month, total in totals.items()}
+
+
 def count_values_above(df: pd.DataFrame, column: str, threshold: float) -> int:
     """Return how many values are strictly greater than the threshold."""
     _validate_numeric_column(df, column)
