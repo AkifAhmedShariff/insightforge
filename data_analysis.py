@@ -695,7 +695,7 @@ def get_true_percentage(df: pd.DataFrame, column: str) -> float:
     if values.empty:
         raise ValueError(f"Column has no values: {column}")
 
-    return round(float(values.astype(bool).sum() / len(df) * 100), 2)
+    return round(float(values.astype(bool).sum() / len(values) * 100), 2)
 
 
 def fill_missing_with_median(df: pd.DataFrame, column: str) -> pd.DataFrame:

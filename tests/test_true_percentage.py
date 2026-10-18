@@ -28,3 +28,9 @@ def test_true_percentage_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_true_percentage(df, "Paid")
+
+
+def test_true_percentage_skips_missing_values():
+    df = pd.DataFrame({"Paid": [True, None, False]})
+
+    assert get_true_percentage(df, "Paid") == 50.0
