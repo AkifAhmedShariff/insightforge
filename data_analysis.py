@@ -447,6 +447,25 @@ def get_ranks(df: pd.DataFrame, column: str) -> list:
     return [None if pd.isna(rank) else int(rank) for rank in ranks]
 
 
+def get_top_categories(
+    df: pd.DataFrame,
+    category_column: str,
+    value_column: str,
+    n: int = 3,
+) -> list:
+    """Return the n categories with the highest total value, highest first."""
+    _validate_numeric_column(df, value_column)
+
+    if category_column not in df.columns:
+        raise KeyError(f"Column not found: {category_column}")
+
+    if n < 1:
+        raise ValueError("n must be at least 1")
+
+    category_sums = df.groupby(category_column)[value_column].sum()
+    return list(category_sums.sort_values().head(n).index)
+
+
 def get_latest_value(df: pd.DataFrame, date_column: str, value_column: str):
     """Return the value from the row with the most recent date."""
     if date_column not in df.columns:
