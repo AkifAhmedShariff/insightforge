@@ -21,3 +21,9 @@ def test_expanding_average_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_expanding_average(df, "Profit")
+
+
+def test_expanding_average_leading_missing_value():
+    df = pd.DataFrame({"Sales": [None, 4, 6]})
+
+    assert get_expanding_average(df, "Sales") == [None, 4.0, 5.0]

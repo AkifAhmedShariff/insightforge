@@ -240,7 +240,7 @@ def get_expanding_average(df: pd.DataFrame, column: str) -> list:
     """
     _validate_numeric_column(df, column)
     values = df[column]
-    running = values.fillna(0).cumsum() / pd.Series(range(1, len(values) + 1), index=values.index)
+    running = values.expanding().mean()
 
     return [
         None if pd.isna(value) else round(float(average), 2)
