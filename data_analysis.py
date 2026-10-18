@@ -685,6 +685,19 @@ def normalize_column(df: pd.DataFrame, column: str) -> list:
     return [None if pd.isna(value) else round(float(value), 4) for value in scaled]
 
 
+def get_true_percentage(df: pd.DataFrame, column: str) -> float:
+    """Return the percentage of non-missing values that are True, rounded to 2 decimals."""
+    if column not in df.columns:
+        raise KeyError(f"Column not found: {column}")
+
+    values = df[column].dropna()
+
+    if values.empty:
+        raise ValueError(f"Column has no values: {column}")
+
+    return round(float(values.astype(bool).sum() / len(df) * 100), 2)
+
+
 def fill_missing_with_median(df: pd.DataFrame, column: str) -> pd.DataFrame:
     """Return a copy of the DataFrame with missing values in the column replaced by its median.
 
