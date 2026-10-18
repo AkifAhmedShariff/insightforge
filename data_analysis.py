@@ -483,6 +483,29 @@ def get_share_above_threshold(df: pd.DataFrame, column: str, threshold: float) -
     return round(float((values > threshold).sum() / len(values) * 100), 2)
 
 
+def filter_rows_between_dates(
+    df: pd.DataFrame,
+    date_column: str,
+    start: str,
+    end: str,
+) -> pd.DataFrame:
+    """Return the rows whose date is between start and end, including both.
+
+    Rows with invalid dates are excluded.
+    """
+    if date_column not in df.columns:
+        raise KeyError(f"Column not found: {date_column}")
+
+    start_date = pd.to_datetime(start)
+    end_date = pd.to_datetime(end)
+
+    if start_date > end_date:
+        raise ValueError("start must not be after end")
+
+    dates = pd.to_datetime(df[date_column], errors="coerce")
+    return df[(dates >= start_date) & (dates <= end_date)]
+
+
 def get_column_ratios(df: pd.DataFrame, numerator: str, denominator: str) -> list:
     """Return numerator / denominator for each row, or None where the denominator is 0 or missing."""
     _validate_numeric_column(df, numerator)
