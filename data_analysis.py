@@ -117,6 +117,22 @@ def get_period_changes(df: pd.DataFrame, column: str) -> list:
     return [None if pd.isna(value) else round(float(value), 2) for value in changes]
 
 
+def get_cumulative_percentage(df: pd.DataFrame, column: str) -> list:
+    """Return the running total of a column as a percentage of the grand total, rounded to 2 decimals.
+
+    Missing values count as 0.
+    """
+    _validate_numeric_column(df, column)
+    values = df[column].fillna(0)
+    grand_total = values.max()
+
+    if grand_total == 0:
+        raise ValueError(f"Column total must not be 0: {column}")
+
+    running = values.cumsum() / grand_total * 100
+    return [round(float(value), 2) for value in running]
+
+
 def get_correlation(df: pd.DataFrame, column_a: str, column_b: str) -> float:
     """Return the Pearson correlation between two numeric columns."""
     _validate_numeric_column(df, column_a)
