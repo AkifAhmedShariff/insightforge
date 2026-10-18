@@ -318,6 +318,18 @@ def get_top_n_rows(df: pd.DataFrame, column: str, n: int = 5) -> pd.DataFrame:
     return df.nlargest(n, column)
 
 
+def filter_rows_containing(df: pd.DataFrame, column: str, text: str) -> pd.DataFrame:
+    """Return the rows whose column contains the given text, ignoring upper/lower case.
+
+    The text is matched literally. Missing values never match.
+    """
+    if column not in df.columns:
+        raise KeyError(f"Column not found: {column}")
+
+    matches = df[column].astype("string").str.contains(text, case=False, na=False)
+    return df[matches]
+
+
 def get_missing_value_percentages(df: pd.DataFrame) -> dict:
     """Return the percentage of missing values in each column."""
     if df.empty:
