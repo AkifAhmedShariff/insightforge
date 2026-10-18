@@ -15,3 +15,12 @@ def test_latest_value_rejects_invalid_dates():
 
     with pytest.raises(ValueError, match="no valid dates"):
         get_latest_value(df, "Date", "Sales")
+
+
+def test_latest_value_picks_most_recent_date():
+    df = pd.DataFrame({
+        "Date": ["2024-05-01", "2024-07-01", "2024-06-01"],
+        "Sales": [100, 300, 200],
+    })
+
+    assert get_latest_value(df, "Date", "Sales") == 300

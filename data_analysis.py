@@ -368,4 +368,4 @@ def get_latest_value(df: pd.DataFrame, date_column: str, value_column: str):
     if dates.isna().all():
         raise ValueError(f"Column has no valid dates: {date_column}")
 
-    return df.loc[dates.idxmin(), value_column]
+    return df.loc[dates.idxmax(), value_column]
