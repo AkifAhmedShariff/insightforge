@@ -505,6 +505,22 @@ def get_top_n_rows(df: pd.DataFrame, column: str, n: int = 5) -> pd.DataFrame:
     return df.nlargest(n, column)
 
 
+def get_most_common_word(df: pd.DataFrame, column: str) -> str:
+    """Return the most common word in a text column, ignoring upper/lower case.
+
+    Words are returned in lowercase. Missing values are skipped.
+    """
+    if column not in df.columns:
+        raise KeyError(f"Column not found: {column}")
+
+    words = [word for value in df[column].dropna() for word in str(value).split()]
+
+    if not words:
+        raise ValueError(f"Column has no words: {column}")
+
+    return pd.Series(words).value_counts().index[0]
+
+
 def filter_rows_containing(df: pd.DataFrame, column: str, text: str) -> pd.DataFrame:
     """Return the rows whose column contains the given text, ignoring upper/lower case.
 
