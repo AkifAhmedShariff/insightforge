@@ -22,3 +22,9 @@ def test_category_share_missing_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_category_share(df, "Region", "Sales")
+
+
+def test_category_share_adds_rows_in_category():
+    df = pd.DataFrame({"Region": ["North", "North", "South"], "Sales": [10, 10, 20]})
+
+    assert get_category_share(df, "Region", "Sales") == {"North": 50.0, "South": 50.0}

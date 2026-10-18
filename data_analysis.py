@@ -91,7 +91,7 @@ def get_category_share(
     if overall_total == 0:
         raise ValueError(f"Column total must not be 0: {value_column}")
 
-    category_values = df.groupby(category_column)[value_column].mean()
+    category_values = df.groupby(category_column)[value_column].sum()
     return {
         category: round(float(value / overall_total * 100), 2)
         for category, value in category_values.items()
