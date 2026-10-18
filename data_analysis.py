@@ -75,6 +75,29 @@ def get_numeric_statistics(
     }
 
 
+def get_category_share(
+    df: pd.DataFrame,
+    category_column: str,
+    value_column: str,
+) -> dict:
+    """Return each category's total as a percentage of the overall total, rounded to 2 decimals."""
+    _validate_numeric_column(df, value_column)
+
+    if category_column not in df.columns:
+        raise KeyError(f"Column not found: {category_column}")
+
+    overall_total = df[value_column].sum()
+
+    if overall_total == 0:
+        raise ValueError(f"Column total must not be 0: {value_column}")
+
+    category_values = df.groupby(category_column)[value_column].sum()
+    return {
+        category: round(float(value / overall_total * 100), 2)
+        for category, value in category_values.items()
+    }
+
+
 def get_cumulative_sum(df: pd.DataFrame, column: str) -> list:
     """Return the running total of a numeric column. Missing values are treated as 0."""
     _validate_numeric_column(df, column)
