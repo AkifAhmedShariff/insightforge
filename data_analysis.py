@@ -479,7 +479,7 @@ def get_best_average_category(df: pd.DataFrame, category_column: str, value_colu
     if values.empty:
         raise ValueError(f"Column has no values: {value_column}")
 
-    averages = values.groupby(category_column)[value_column].sum()
+    averages = values.groupby(category_column)[value_column].mean()
     return averages.idxmax()
 
 
