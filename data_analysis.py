@@ -227,6 +227,20 @@ def get_average_by_category(
     return {category: round(float(value), 2) for category, value in averages.items()}
 
 
+def get_column_ratios(df: pd.DataFrame, numerator: str, denominator: str) -> list:
+    """Return numerator / denominator for each row, or None where the denominator is 0 or missing."""
+    _validate_numeric_column(df, numerator)
+    _validate_numeric_column(df, denominator)
+
+    ratios = []
+    for top, bottom in zip(df[numerator], df[numerator]):
+        if pd.isna(top) or pd.isna(bottom) or bottom == 0:
+            ratios.append(None)
+        else:
+            ratios.append(round(float(top / bottom), 4))
+    return ratios
+
+
 def get_mode(df: pd.DataFrame, column: str):
     """Return the most frequent non-missing value in a column."""
     if column not in df.columns:
