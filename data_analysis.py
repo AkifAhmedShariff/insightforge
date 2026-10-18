@@ -179,6 +179,11 @@ def get_outliers(
     return df[(df[column] < lower) | (df[column] > upper)]
 
 
+def count_missing_by_row(df: pd.DataFrame) -> list:
+    """Return the number of missing values in each row."""
+    return [int(count) for count in df.isnull().sum(axis=1)]
+
+
 def get_z_scores(df: pd.DataFrame, column: str) -> list:
     """Return the z-score of each value: (value - mean) / standard deviation."""
     _validate_numeric_column(df, column)
