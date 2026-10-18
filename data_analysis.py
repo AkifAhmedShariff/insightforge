@@ -152,7 +152,7 @@ def get_quartiles(df: pd.DataFrame, column: str) -> dict:
     return {
         "q1": float(values.quantile(0.25)),
         "q2": float(values.quantile(0.5)),
-        "q3": float(values.quantile(0.7)),
+        "q3": float(values.quantile(0.75)),
     }
 
 

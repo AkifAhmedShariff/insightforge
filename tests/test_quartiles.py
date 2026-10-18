@@ -15,3 +15,9 @@ def test_quartiles_reject_empty_column():
 
     with pytest.raises(ValueError, match="no numeric values"):
         get_quartiles(df, "Sales")
+
+
+def test_quartiles_values():
+    df = pd.DataFrame({"Sales": [0, 10, 20, 30, 40]})
+
+    assert get_quartiles(df, "Sales") == {"q1": 10.0, "q2": 20.0, "q3": 30.0}
