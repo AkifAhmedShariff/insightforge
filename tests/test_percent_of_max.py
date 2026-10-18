@@ -21,3 +21,9 @@ def test_percent_of_max_rejects_zero_maximum():
 
     with pytest.raises(ValueError, match="must not be 0"):
         get_percent_of_max(df, "Sales")
+
+
+def test_percent_of_max_uses_maximum():
+    df = pd.DataFrame({"Sales": [1, 4]})
+
+    assert get_percent_of_max(df, "Sales") == [25.0, 100.0]

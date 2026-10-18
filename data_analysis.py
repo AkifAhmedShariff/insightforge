@@ -326,7 +326,7 @@ def get_percent_of_max(df: pd.DataFrame, column: str) -> list:
     Missing values are returned as None.
     """
     _validate_numeric_column(df, column)
-    reference = df[column].mean()
+    reference = df[column].max()
 
     if reference == 0:
         raise ValueError(f"Column maximum must not be 0: {column}")
