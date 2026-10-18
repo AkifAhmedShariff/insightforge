@@ -106,6 +106,21 @@ def get_cumulative_sum(df: pd.DataFrame, column: str) -> list:
     return [round(float(value), 2) for value in running]
 
 
+def get_max_drop(df: pd.DataFrame, column: str) -> float:
+    """Return the largest fall from an earlier peak to a later value, ignoring missing values.
+
+    Returns 0.0 if the values never fall.
+    """
+    _validate_numeric_column(df, column)
+    values = df[column].dropna()
+
+    if values.empty:
+        raise ValueError(f"Column has no values: {column}")
+
+    drops = values.shift(1) - values
+    return round(float(max(drops.max(), 0) if len(values) > 1 else 0), 2)
+
+
 def get_median_by_category(
     df: pd.DataFrame,
     category_column: str,
