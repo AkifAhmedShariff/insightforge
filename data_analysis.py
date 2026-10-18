@@ -164,7 +164,7 @@ def get_daily_average(df: pd.DataFrame, date_column: str, value_column: str) -> 
         raise ValueError(f"Column has no valid dates: {date_column}")
 
     total = df.loc[valid, value_column].sum()
-    days = valid.sum()
+    days = dates[valid].dt.normalize().nunique()
     return round(float(total / days), 2)
 
 

@@ -28,3 +28,9 @@ def test_daily_average_missing_date_column():
 
     with pytest.raises(KeyError, match="Column not found"):
         get_daily_average(df, "Date", "Sales")
+
+
+def test_daily_average_several_rows_on_one_day():
+    df = pd.DataFrame({"Date": ["2024-01-01", "2024-01-01", "2024-01-02"], "Sales": [10, 20, 30]})
+
+    assert get_daily_average(df, "Date", "Sales") == 30.0
